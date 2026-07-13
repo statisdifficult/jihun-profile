@@ -725,6 +725,106 @@
       24% { transform: scale(1); }
     }
 
+    /* ---------- FUN LAYER (easter eggs) ---------- */
+    button.chip { font-family: inherit; cursor: pointer; font-size: 0.83rem; }
+
+    #toast-wrap {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 600; display: flex; flex-direction: column; gap: 8px;
+      align-items: center; pointer-events: none; width: max-content; max-width: 92vw;
+    }
+    .toast {
+      background: var(--nav-bg); border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      color: var(--text); font-size: 0.88rem; font-weight: 600;
+      padding: 11px 20px; border-radius: 99px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), 0 0 20px var(--glow);
+      opacity: 0; transform: translateY(14px) scale(0.95);
+      transition: all 0.35s var(--ease-spring);
+      max-width: min(86vw, 480px); text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    .hero-photo-wrap { cursor: pointer; }
+    .hero-photo-wrap:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 8px; border-radius: 50%;
+    }
+    .hero-photo-wrap:focus-visible .photo-hint { opacity: 1; transform: translate(-50%, 0); }
+    .photo-hint {
+      position: absolute; bottom: -12px; left: 50%;
+      transform: translate(-50%, 6px);
+      background: var(--nav-bg); border: 1px solid var(--card-border);
+      border-radius: 99px; padding: 3px 12px;
+      font-size: 0.68rem; font-weight: 700; color: var(--muted);
+      opacity: 0; transition: all 0.3s ease; white-space: nowrap;
+      pointer-events: none; z-index: 2;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    .hero-photo-wrap:hover .photo-hint { opacity: 1; transform: translate(-50%, 0); }
+    @media (hover: none) {
+      .photo-hint { opacity: 0.85; transform: translate(-50%, 0); }
+    }
+
+    .fly-ball {
+      position: fixed; left: 0; top: 0; z-index: 550;
+      font-size: 2.1rem; pointer-events: none; will-change: transform;
+    }
+
+    #stone-layer {
+      position: absolute; top: 0; left: 0; width: 100%; height: 0;
+      z-index: 1; pointer-events: none; overflow: visible;
+    }
+    body:not(.theme-personal) #stone-layer { display: none; }
+    .stone {
+      position: absolute; width: 20px; height: 20px; border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      animation: stone-pop 0.3s var(--ease-spring) forwards;
+    }
+    .stone.black { background: radial-gradient(circle at 35% 30%, #555, #0a0a0a 65%); box-shadow: 0 2px 6px rgba(0,0,0,0.5), 0 0 0 1.5px rgba(255,255,255,0.22); }
+    body.light .stone.black { box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+    .stone.white { background: radial-gradient(circle at 35% 30%, #fff, #cfcfcf 70%); box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
+    .stone.fade { transition: opacity 0.8s ease; opacity: 0; }
+    @keyframes stone-pop { to { transform: translate(-50%, -50%) scale(1); } }
+
+    #galton-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(4, 6, 14, 0.72);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    }
+    #galton-overlay.open {
+      opacity: 1; pointer-events: auto; visibility: visible;
+      transition: opacity 0.3s ease;
+    }
+    .galton-box {
+      background: var(--bg-2); border: 1px solid var(--card-border);
+      border-radius: 24px; padding: 26px 28px 20px; position: relative;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5), 0 0 60px var(--glow);
+      transform: scale(0.92); transition: transform 0.3s var(--ease-spring);
+      max-width: 92vw; max-height: 92vh; overflow: auto;
+    }
+    #galton-overlay.open .galton-box { transform: scale(1); }
+    .galton-box h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .galton-box p { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; }
+    .galton-box canvas {
+      display: block; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02); max-width: 100%; height: auto;
+    }
+    .galton-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.2rem; cursor: pointer; line-height: 1;
+    }
+    .galton-close:hover { color: var(--text); }
+
+    #matrix-rain {
+      position: fixed; inset: 0; z-index: 450;
+      pointer-events: none; opacity: 0; transition: opacity 0.5s ease;
+    }
+    #matrix-rain.on { opacity: 1; }
+
     /* ---------- SCROLL REVEAL ---------- */
     [data-reveal] {
       opacity: 0;
@@ -853,8 +953,9 @@
     <!-- ============ RESEARCH VIEW ============ -->
     <div class="view" data-view="research">
       <header class="hero">
-        <div class="hero-photo-wrap">
+        <div class="hero-photo-wrap" role="button" tabindex="0" aria-label="Open the Galton board demo">
           <img src="profile-research.png" alt="Jihun Yoon" class="hero-photo">
+          <span class="photo-hint" aria-hidden="true">🎱 <span class="lang-en">click!</span><span class="lang-ko">클릭!</span></span>
         </div>
         <h1>Jihun Yoon</h1>
         <p class="name-kr">윤지훈</p>
@@ -863,6 +964,7 @@
           <a class="chip" href="mailto:yoon2839@chilab.kr"><span class="ico">✉️</span> yoon2839@chilab.kr</a>
           <a class="chip" href="https://www.chilab.kr/" target="_blank" rel="noopener"><span class="ico">🏥</span> CHI Lab</a>
           <a class="chip" href="https://scholar.google.com/citations?user=ChLogK0AAAAJ&amp;hl=ko" target="_blank" rel="noopener"><span class="ico">🎓</span> Google Scholar</a>
+          <button class="chip" id="pvalue-chip" type="button"><span class="ico">🎲</span> <span class="pv">p = ?</span></button>
         </div>
         <div class="scroll-hint" aria-hidden="true">▼</div>
       </header>
@@ -988,8 +1090,9 @@
     <!-- ============ PERSONAL VIEW ============ -->
     <div class="view" data-view="personal" hidden>
       <header class="hero">
-        <div class="hero-photo-wrap">
+        <div class="hero-photo-wrap" role="button" tabindex="0" aria-label="Hit a home run">
           <img src="profile-personal.jpg" alt="Jihun Yoon" class="hero-photo">
+          <span class="photo-hint" aria-hidden="true">⚾ <span class="lang-en">click!</span><span class="lang-ko">클릭!</span></span>
         </div>
         <h1 class="lang-en">Personal</h1>
         <h1 class="lang-ko">일상</h1>
@@ -1402,6 +1505,20 @@
   </main>
 
   <footer>&copy; 2026 Jihun Yoon · <span class="lang-en">made with</span><span class="lang-ko">with</span> <span class="heart">❤️</span> <span class="math">(p &lt; .001)</span></footer>
+
+  <div id="stone-layer" aria-hidden="true"></div>
+  <div id="toast-wrap" aria-live="polite"></div>
+  <canvas id="matrix-rain" aria-hidden="true"></canvas>
+
+  <div id="galton-overlay" aria-hidden="true">
+    <div class="galton-box" role="dialog" aria-modal="true" aria-labelledby="galton-title">
+      <button class="galton-close" type="button" aria-label="Close">✕</button>
+      <h3 id="galton-title">🎱 <span class="lang-en">Galton Board</span><span class="lang-ko">골턴 보드</span></h3>
+      <p class="lang-en">The Central Limit Theorem, live — every ball is a random walk.</p>
+      <p class="lang-ko">중심극한정리 실시간 시연 — 공 하나하나가 랜덤워크입니다.</p>
+      <canvas id="galton-canvas" width="520" height="430"></canvas>
+    </div>
+  </div>
 
   <script>
     (function () {
@@ -1960,6 +2077,311 @@
         a.textContent = '🗺';
         titleEl.appendChild(a);
       });
+
+      /* ================================================================
+         FUN LAYER — toasts, Galton board, home runs, baduk stones,
+         daily p-value, Konami code, tab-title tease, console egg
+         ================================================================ */
+      const KOmode = () => document.body.classList.contains('lang-ko');
+
+      /* ----- toasts ----- */
+      const toastWrap = document.getElementById('toast-wrap');
+      function toast(msg, ms = 2400) {
+        while (toastWrap.children.length >= 3) toastWrap.firstChild.remove();
+        const el = document.createElement('div');
+        el.className = 'toast';
+        el.textContent = msg;
+        toastWrap.appendChild(el);
+        requestAnimationFrame(() => el.classList.add('show'));
+        setTimeout(() => {
+          el.classList.remove('show');
+          setTimeout(() => el.remove(), 400);
+        }, ms);
+      }
+
+      /* ----- p-value dice ----- */
+      const pChip = document.getElementById('pvalue-chip');
+      pChip.addEventListener('click', () => {
+        const p = Math.random();
+        const label = p < 0.001 ? 'p < .001' : 'p = ' + p.toFixed(3);
+        pChip.querySelector('.pv').textContent = label;
+        if (p < 0.05) {
+          toast(KOmode()
+            ? `${label} — 유의합니다! 오늘 좋은 일이 생길 예정 ✨`
+            : `${label} — significant! Good things are coming ✨`);
+        } else {
+          toast(KOmode()
+            ? `${label} — 귀무가설 기각 실패… 한 번 더? 😅`
+            : `${label} — failed to reject H₀… roll again? 😅`);
+        }
+      });
+
+      /* ----- Galton board (research photo) ----- */
+      (function galton() {
+        const overlay = document.getElementById('galton-overlay');
+        const cv = document.getElementById('galton-canvas');
+        const gctx = cv.getContext('2d');
+        const GW = cv.width, GH = cv.height;
+        const ROWS = 11, BINS = ROWS + 1;
+        const topY = 30, gapY = 24, gapX = 30, cx = GW / 2;
+        const histBase = GH - 8;
+        const CHOOSE = [1, 11, 55, 165, 330, 462, 462, 330, 165, 55, 11, 1]; // C(11, k)
+        let balls = [], bins = [], total = 0, spawnT = null, rafId = null, lastT = 0;
+
+        const pegX = (depth, rights) => cx + (rights - depth / 2) * gapX;
+        const pegY = depth => topY + depth * gapY;
+
+        function reset() { balls = []; bins = new Array(BINS).fill(0); total = 0; }
+
+        function spawn() {
+          balls.push({ d: 0, r: 0, t: 0, phase: 'walk',
+            fx: cx, fy: topY - 18, tx: cx, ty: topY });
+        }
+
+        function advance(b) {
+          if (b.d >= ROWS) { // finished the pegs → drop into its bin
+            const unit = Math.min(6, 116 / Math.max(1, Math.max(...bins) + 1));
+            b.phase = 'drop';
+            b.fx = b.tx; b.fy = b.ty;
+            b.tx = pegX(ROWS, b.r);
+            b.ty = histBase - bins[b.r] * unit - 4;
+            return;
+          }
+          const add = Math.random() < 0.5 ? 0 : 1;
+          b.fx = b.tx; b.fy = b.ty;
+          b.d++; b.r += add;
+          b.tx = pegX(b.d, b.r); b.ty = pegY(b.d);
+        }
+
+        function loop(now) {
+          const dt = Math.min((now - lastT) / 1000, 0.05); lastT = now;
+          gctx.clearRect(0, 0, GW, GH);
+          const light = document.body.classList.contains('light');
+          const acc = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+          const acc2 = getComputedStyle(document.body).getPropertyValue('--accent-2').trim();
+
+          // pegs
+          gctx.fillStyle = light ? 'rgba(20,30,70,0.35)' : 'rgba(255,255,255,0.3)';
+          for (let d = 1; d <= ROWS; d++) for (let k = 0; k <= d; k++) {
+            gctx.beginPath();
+            gctx.arc(pegX(d, k), pegY(d), 2, 0, Math.PI * 2);
+            gctx.fill();
+          }
+
+          // histogram
+          const unit = Math.min(6, 116 / Math.max(1, Math.max(...bins)));
+          for (let k = 0; k < BINS; k++) {
+            const h = bins[k] * unit;
+            if (!h) continue;
+            gctx.fillStyle = acc;
+            gctx.globalAlpha = 0.75;
+            gctx.fillRect(pegX(ROWS, k) - 11, histBase - h, 22, h);
+            gctx.globalAlpha = 1;
+          }
+          // expected binomial curve once enough balls have landed
+          if (total > 30) {
+            gctx.strokeStyle = acc2;
+            gctx.setLineDash([5, 5]);
+            gctx.beginPath();
+            for (let k = 0; k < BINS; k++) {
+              const y = histBase - (CHOOSE[k] / 2048) * total * unit;
+              k ? gctx.lineTo(pegX(ROWS, k), y) : gctx.moveTo(pegX(ROWS, k), y);
+            }
+            gctx.stroke();
+            gctx.setLineDash([]);
+            gctx.fillStyle = acc2;
+            gctx.font = 'italic 11px "JetBrains Mono", monospace';
+            gctx.fillText(`Binomial(${ROWS}, ½) · n = ${total}`, 12, 20);
+          }
+
+          // balls
+          gctx.fillStyle = acc;
+          for (let i = balls.length - 1; i >= 0; i--) {
+            const b = balls[i];
+            b.t += dt * (b.phase === 'drop' ? 5 : 6);
+            if (b.t >= 1) {
+              if (b.phase === 'drop') { bins[b.r]++; total++; balls.splice(i, 1); continue; }
+              b.t = 0;
+              advance(b);
+            }
+            const e = b.t * b.t * (3 - 2 * b.t); // smoothstep
+            const x = b.fx + (b.tx - b.fx) * e;
+            const y = b.fy + (b.ty - b.fy) * e;
+            gctx.beginPath();
+            gctx.arc(x, y, 3.2, 0, Math.PI * 2);
+            gctx.fill();
+          }
+
+          rafId = requestAnimationFrame(loop);
+        }
+
+        const trigger = document.querySelector('[data-view="research"] .hero-photo-wrap');
+        function open() {
+          reset();
+          clearInterval(spawnT);
+          cancelAnimationFrame(rafId);
+          overlay.classList.add('open');
+          overlay.setAttribute('aria-hidden', 'false');
+          spawnT = setInterval(() => { if (balls.length < 70) spawn(); }, 150);
+          lastT = performance.now();
+          rafId = requestAnimationFrame(loop);
+          overlay.querySelector('.galton-close').focus();
+        }
+        function close() {
+          if (!overlay.classList.contains('open')) return;
+          overlay.classList.remove('open');
+          overlay.setAttribute('aria-hidden', 'true');
+          clearInterval(spawnT);
+          cancelAnimationFrame(rafId);
+          trigger.focus();
+        }
+        overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+        overlay.querySelector('.galton-close').addEventListener('click', close);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+        trigger.addEventListener('click', () => {
+          open();
+          toast(KOmode() ? '🎱 공들이 종형곡선을 그립니다' : '🎱 Watch the bell curve emerge');
+        });
+      })();
+
+      /* keyboard activation for the photo easter eggs */
+      document.querySelectorAll('.hero-photo-wrap[role="button"]').forEach(el => {
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+        });
+      });
+
+      /* ----- home runs (personal photo) ----- */
+      (function homers() {
+        let count = 0;
+        const wrap = document.querySelector('[data-view="personal"] .hero-photo-wrap');
+        wrap.addEventListener('click', () => {
+          count++;
+          if (!reduceMotion) {
+            const rect = wrap.getBoundingClientRect();
+            const ball = document.createElement('span');
+            ball.className = 'fly-ball';
+            ball.textContent = '⚾';
+            document.body.appendChild(ball);
+            const x0 = rect.left + rect.width / 2, y0 = rect.top + rect.height / 2;
+            const dir = Math.random() < 0.5 ? -1 : 1;
+            const vx = dir * (350 + Math.random() * 450);
+            const vy = -(650 + Math.random() * 350);
+            const g = 1300, t0 = performance.now();
+            (function fly(now) {
+              const t = (now - t0) / 1000;
+              const x = x0 + vx * t, y = y0 + vy * t + 0.5 * g * t * t;
+              ball.style.transform = `translate(${x}px, ${y}px) rotate(${t * 720 * dir}deg)`;
+              if (y < innerHeight + 80 && t < 3) requestAnimationFrame(fly);
+              else ball.remove();
+            })(t0);
+          }
+          if (count === 17) {
+            toast(KOmode() ? '🏟️ 17번째 홈런 — 전 구장 정복!' : '🏟️ 17th homer — every stadium conquered!', 3200);
+          } else {
+            const msgs = KOmode()
+              ? ['쾅! 홈런! ⚾', '담장을 넘겼습니다!!', '삼성 라이온즈 화이팅! 🦁', '장외 홈런—!']
+              : ['CRACK! Home run! ⚾', "It's outta here!!", 'Go Samsung Lions! 🦁', 'Moonshot—!'];
+            toast(msgs[(Math.random() * msgs.length) | 0], 1500);
+          }
+        });
+      })();
+
+      /* ----- baduk stones on empty space (personal) ----- */
+      (function baduk() {
+        const layer = document.getElementById('stone-layer');
+        const stones = [];
+        let color = 'black', hinted = false;
+        document.addEventListener('click', e => {
+          if (!document.body.classList.contains('theme-personal')) return;
+          if (e.clientY < 130) return;
+          if (window.getSelection && String(window.getSelection())) return; // text-selection click
+          if (e.target.closest('a,button,summary,input,.glass,.stat-card,.places-group,.currently-item,.contact-card,.chip,.topnav,.hero-photo-wrap,#galton-overlay,.placeholder,footer')) return;
+          const s = document.createElement('span');
+          s.className = 'stone ' + color;
+          s.style.left = e.pageX + 'px';
+          s.style.top = e.pageY + 'px';
+          layer.appendChild(s);
+          stones.push(s);
+          color = color === 'black' ? 'white' : 'black';
+          if (stones.length > 40) {
+            const old = stones.shift();
+            old.classList.add('fade');
+            setTimeout(() => old.remove(), 900);
+          }
+          if (!hinted) {
+            hinted = true;
+            toast(KOmode() ? '⚫⚪ 바둑 모드 — 빈 곳에 수담 한 판' : '⚫⚪ Baduk mode — stones go where you click');
+          }
+        });
+      })();
+
+      /* ----- Konami code → math matrix rain ----- */
+      (function konami() {
+        const seq = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        const buf = [];
+        let running = false;
+        document.addEventListener('keydown', e => {
+          const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+          buf.push(k);
+          if (buf.length > seq.length) buf.shift();
+          if (buf.length !== seq.length || !seq.every((s, i) => buf[i] === s)) return;
+          buf.length = 0;
+          if (running) return;
+          running = true;
+          toast(KOmode() ? '🤖 코나미 코드! AI 모드 가동' : '🤖 Konami code! AI mode engaged');
+          if (reduceMotion) { running = false; return; }
+          const mc = document.getElementById('matrix-rain');
+          const mx = mc.getContext('2d');
+          const CHARS = 'Σσμβχπλθφε∂∫∇01≈'.split('');
+          let cols, drops;
+          function sync() {
+            mc.width = innerWidth; mc.height = innerHeight;
+            cols = Math.floor(mc.width / 18);
+            drops = Array.from({ length: cols }, () => Math.random() * -40);
+          }
+          sync();
+          mc.classList.add('on');
+          const acc = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+          const t0 = performance.now();
+          (function rain(now) {
+            if (mc.width !== innerWidth || mc.height !== innerHeight) sync();
+            mx.fillStyle = document.body.classList.contains('light')
+              ? 'rgba(244, 246, 252, 0.1)' : 'rgba(4, 6, 14, 0.1)';
+            mx.fillRect(0, 0, mc.width, mc.height);
+            mx.font = '15px "JetBrains Mono", monospace';
+            mx.fillStyle = acc;
+            drops.forEach((d, i) => {
+              mx.fillText(CHARS[(Math.random() * CHARS.length) | 0], i * 18, d * 18);
+              drops[i] = (d * 18 > mc.height && Math.random() > 0.975) ? 0 : d + 1;
+            });
+            if ((now - t0) / 1000 < 6) requestAnimationFrame(rain);
+            else {
+              mc.classList.remove('on');
+              setTimeout(() => { mx.clearRect(0, 0, mc.width, mc.height); running = false; }, 600);
+            }
+          })(t0);
+        });
+      })();
+
+      /* ----- tab-title tease ----- */
+      const baseTitle = document.title;
+      document.addEventListener('visibilitychange', () => {
+        document.title = document.hidden
+          ? (KOmode() ? '⚾ 잠깐, 어디 가세요?' : '⚾ Hey, come back!')
+          : baseTitle;
+      });
+
+      /* ----- console egg ----- */
+      try {
+        console.log(
+          '%c JIHUN YOON %c stats · ML · clinical epi ',
+          'background:linear-gradient(90deg,#4ba3f5,#34d399);color:#fff;font-weight:700;padding:4px 8px;border-radius:4px 0 0 4px',
+          'background:#111827;color:#8d95b0;padding:4px 8px;border-radius:0 4px 4px 0'
+        );
+        console.log('ŷ = curiosity + effort·x   (R² = 0.99, p < .001)');
+        console.log('easter eggs: click both hero photos · roll the 🎲 chip · click empty space in Personal · ↑↑↓↓←→←→BA');
+      } catch (e) {}
 
       /* ===== INITIAL VIEW ===== */
       const hash = window.location.hash.replace('#', '');

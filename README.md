@@ -7,6 +7,7 @@ An upgraded, effects-heavy single-page profile:
 - 🌌 Scatter-plot canvas (○ × △ markers) with a live least-squares regression line + animated aurora
 - 📐 Graph-paper grid, drifting math symbols (∑ σ² χ² …), Greek section indices
 - 🫀 ECG trace scrolling along the bottom, synaptic pulses on the constellation links
+- 🥚 Easter eggs: Galton board (click the Research photo), home runs (click the Personal photo), p-value dice chip, baduk stones on empty space (Personal), Konami code math-matrix rain, console message
 - ⌨️ Typewriter hero subtitle (per view & language)
 - ✨ Scroll-reveal sections, 3D tilt cards, cursor glow, scroll progress bar
 - 🔢 Animated stat counters, glowing timeline, glass accordions
