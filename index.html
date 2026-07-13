@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jihun Yoon — Senior Data Scientist, Researcher</title>
+  <meta name="description" content="Jihun Yoon, Senior Data Scientist & Researcher at CHI Lab, Asan Medical Center. Statistics, machine learning, and clinical epidemiology.">
+  <meta name="theme-color" content="#070a14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       AURORA — dark glassmorphism profile with particles,
+       typewriter, scroll-reveal, tilt cards & cursor glow
+       ============================================================ */
+    :root {
+      --bg: #070a14;
+      --bg-2: #0b0f1f;
+      --card: rgba(255, 255, 255, 0.045);
+      --card-border: rgba(255, 255, 255, 0.09);
+      --card-hover: rgba(255, 255, 255, 0.075);
+      --text: #e9edf9;
+      --muted: #8d95b0;
+      --accent: #38bdf8;
+      --accent-2: #818cf8;
+      --accent-3: #e879f9;
+      --glow: rgba(56, 189, 248, 0.35);
+      --nav-bg: rgba(7, 10, 20, 0.72);
+      --radius: 20px;
+      --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+    }
+
+    /* Personal view — warm hues */
+    body.theme-personal {
+      --accent: #fbbf24;
+      --accent-2: #fb7185;
+      --accent-3: #e879f9;
+      --glow: rgba(251, 113, 133, 0.32);
+    }
+
+    /* Light mode */
+    body.light {
+      --bg: #f4f6fc;
+      --bg-2: #eceff9;
+      --card: rgba(255, 255, 255, 0.72);
+      --card-border: rgba(20, 30, 70, 0.09);
+      --card-hover: rgba(255, 255, 255, 0.95);
+      --text: #131a33;
+      --muted: #5d6684;
+      --accent: #0284c7;
+      --accent-2: #6366f1;
+      --accent-3: #c026d3;
+      --glow: rgba(2, 132, 199, 0.18);
+      --nav-bg: rgba(246, 248, 254, 0.78);
+    }
+    body.light.theme-personal {
+      --accent: #d97706;
+      --accent-2: #e11d48;
+      --accent-3: #c026d3;
+      --glow: rgba(225, 29, 72, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+
+    body {
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   "Apple SD Gothic Neo", 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    ::selection { background: var(--accent-2); color: #fff; }
+
+    a { color: var(--accent); text-decoration: none; transition: all 0.25s ease; }
+    a:hover { color: var(--accent-3); }
+
+    /* ---------- BACKGROUND LAYERS ---------- */
+    #particles {
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none;
+    }
+    .aurora {
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none; overflow: hidden;
+      filter: blur(90px);
+      opacity: 0.55;
+      transition: opacity 0.6s ease;
+    }
+    body.light .aurora { opacity: 0.35; }
+    .aurora span {
+      position: absolute; border-radius: 50%;
+      mix-blend-mode: screen;
+    }
+    body.light .aurora span { mix-blend-mode: normal; }
+    .aurora .a1 {
+      width: 55vw; height: 55vw; max-width: 780px; max-height: 780px;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 65%);
+      top: -18%; left: -12%;
+      animation: aurora-drift 26s ease-in-out infinite;
+    }
+    .aurora .a2 {
+      width: 46vw; height: 46vw; max-width: 640px; max-height: 640px;
+      background: radial-gradient(circle, var(--accent-2) 0%, transparent 65%);
+      top: 22%; right: -14%;
+      animation: aurora-drift 32s ease-in-out infinite reverse;
+    }
+    .aurora .a3 {
+      width: 40vw; height: 40vw; max-width: 560px; max-height: 560px;
+      background: radial-gradient(circle, var(--accent-3) 0%, transparent 65%);
+      bottom: -16%; left: 28%;
+      animation: aurora-drift 38s ease-in-out infinite;
+      animation-delay: -12s;
+    }
+    @keyframes aurora-drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25%  { transform: translate(6vw, 4vh) scale(1.08); }
+      50%  { transform: translate(-4vw, 7vh) scale(0.94); }
+      75%  { transform: translate(-7vw, -4vh) scale(1.05); }
+    }
+
+    #cursor-glow {
+      position: fixed; width: 460px; height: 460px;
+      border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: 1; opacity: 0;
+      transition: opacity 0.5s ease;
+      will-change: left, top;
+    }
+    body.has-cursor #cursor-glow { opacity: 1; }
+    @media (hover: none), (max-width: 760px) { #cursor-glow { display: none; } }
+
+    /* ---------- SCROLL PROGRESS ---------- */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+      z-index: 300;
+      box-shadow: 0 0 12px var(--glow);
+    }
+
+    /* ---------- NAV ---------- */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex; align-items: center; gap: 18px;
+      padding: 14px 28px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      border-bottom: 1px solid var(--card-border);
+      transition: background-color 0.5s ease;
+    }
+    .brand {
+      font-weight: 800; font-size: 0.95rem; letter-spacing: 0.14em;
+      background: linear-gradient(100deg, var(--text) 20%, var(--accent) 70%, var(--accent-3) 110%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
+    .views-nav {
+      display: flex; gap: 4px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      padding: 4px; border-radius: 99px;
+    }
+    .view-tab {
+      background: transparent; border: none; cursor: pointer;
+      font-family: inherit; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.06em; color: var(--muted);
+      padding: 7px 18px; border-radius: 99px;
+      transition: all 0.3s var(--ease-spring);
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: #fff;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      box-shadow: 0 4px 16px var(--glow);
+    }
+    body.pro-mode .views-nav { display: none !important; }
+    body.pro-mode [data-view="personal"] { display: none !important; }
+
+    .anchors {
+      display: flex; gap: 2px; flex: 1;
+      justify-content: center; align-items: center;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .anchors::-webkit-scrollbar { display: none; }
+    .anchors[hidden] { display: none; }
+    .anchors a {
+      color: var(--muted); font-size: 0.78rem; font-weight: 600;
+      padding: 7px 13px; border-radius: 99px; white-space: nowrap;
+      position: relative;
+    }
+    .anchors a:hover { color: var(--text); background: var(--card); }
+    .anchors a.active {
+      color: var(--accent);
+      background: var(--card);
+    }
+
+    .nav-actions { display: flex; gap: 8px; align-items: center; }
+    .lang-switch { display: flex; gap: 3px; background: var(--card); border: 1px solid var(--card-border); padding: 3px; border-radius: 99px; }
+    .lang-switch button {
+      background: transparent; border: none; cursor: pointer;
+      font-family: inherit; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.05em; color: var(--muted);
+      padding: 5px 11px; border-radius: 99px;
+      transition: all 0.25s ease; white-space: nowrap;
+    }
+    .lang-switch button.active { background: var(--text); color: var(--bg); }
+    body.lang-ko .lang-en { display: none !important; }
+    body:not(.lang-ko) .lang-ko { display: none !important; }
+
+    #theme-toggle {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--card); border: 1px solid var(--card-border);
+      cursor: pointer; font-size: 0.95rem; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text);
+      transition: transform 0.5s var(--ease-spring), background 0.3s ease;
+    }
+    #theme-toggle:hover { transform: rotate(40deg) scale(1.1); }
+
+    /* ---------- LAYOUT ---------- */
+    main { position: relative; z-index: 2; }
+    .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+    .view[hidden] { display: none; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 92vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 130px 24px 60px;
+      position: relative;
+    }
+    .hero-photo-wrap {
+      position: relative; margin-bottom: 34px;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .hero-photo-wrap::before {
+      content: ''; position: absolute; inset: -6px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+      animation: spin 5s linear infinite;
+      filter: blur(1px);
+    }
+    .hero-photo-wrap::after {
+      content: ''; position: absolute; inset: -22px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+      z-index: -1;
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.12); }
+    }
+    .hero-photo {
+      position: relative;
+      width: 168px; height: 168px;
+      border-radius: 50%; object-fit: cover;
+      border: 4px solid var(--bg);
+      display: block;
+    }
+    [data-view="research"] .hero-photo { object-position: center 15%; }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 4.6rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.08;
+      background: linear-gradient(110deg, var(--text) 25%, var(--accent) 60%, var(--accent-2) 85%, var(--accent-3) 110%);
+      background-size: 220% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: grad-sweep 7s linear infinite;
+    }
+    @keyframes grad-sweep {
+      from { background-position: 0% center; }
+      to   { background-position: 220% center; }
+    }
+    .hero .name-kr {
+      font-size: 1.15rem; color: var(--muted); font-weight: 500;
+      letter-spacing: 0.5em; margin: 10px 0 22px; padding-left: 0.5em;
+    }
+
+    .typewriter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.9rem, 2.4vw, 1.12rem);
+      color: var(--muted); min-height: 1.9em;
+    }
+    .typewriter .tw-text { color: var(--accent); font-weight: 700; }
+    .typewriter .tw-cursor {
+      display: inline-block; width: 2px; height: 1.1em;
+      background: var(--accent); vertical-align: text-bottom;
+      margin-left: 2px;
+      animation: blink 0.85s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-chips {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-top: 34px;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 99px;
+      background: var(--card); border: 1px solid var(--card-border);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      color: var(--text); font-size: 0.83rem; font-weight: 600;
+      transition: all 0.3s var(--ease-spring);
+    }
+    .chip:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 28px var(--glow);
+      color: var(--text);
+    }
+    .chip .ico { font-size: 0.95rem; }
+
+    .scroll-hint {
+      position: absolute; bottom: 26px; left: 50%;
+      transform: translateX(-50%);
+      color: var(--muted); font-size: 1.3rem;
+      animation: bob 1.8s ease-in-out infinite;
+      opacity: 0.7;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 9px); }
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section { padding: 46px 0; }
+    .section-head {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 30px;
+    }
+    .section-head .idx {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--accent); font-weight: 700;
+    }
+    .section-head h2 {
+      font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .section-head .rule {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--card-border), transparent);
+      position: relative; overflow: hidden;
+    }
+    .section-head .rule::after {
+      content: ''; position: absolute; top: 0; left: -40%;
+      width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: rule-scan 3.4s ease-in-out infinite;
+    }
+    @keyframes rule-scan {
+      0% { left: -40%; } 60%, 100% { left: 105%; }
+    }
+
+    /* ---------- GLASS CARDS ---------- */
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      padding: 30px 34px;
+      transition: background 0.35s ease, border-color 0.35s ease,
+                  box-shadow 0.35s ease, transform 0.2s ease;
+      position: relative;
+    }
+    .glass:hover {
+      background: var(--card-hover);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--card-border);
+    }
+    body.light .glass:hover { box-shadow: 0 20px 50px rgba(20, 30, 70, 0.12); }
+
+    .about-text { font-size: 1.1rem; line-height: 1.85; }
+    .about-text strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ---------- TIMELINE ---------- */
+    .timeline { position: relative; padding-left: 34px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2), transparent);
+      border-radius: 2px;
+    }
+    .tl-item { position: relative; padding: 0 0 28px 24px; }
+    .tl-item:last-child { padding-bottom: 4px; }
+    .tl-item::before {
+      content: ''; position: absolute; left: -34px; top: 7px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 4px var(--glow), 0 0 18px var(--glow);
+      transition: transform 0.3s var(--ease-spring);
+    }
+    .tl-item:hover::before { transform: scale(1.25); }
+    .tl-item .tl-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem; color: var(--accent); font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .tl-item .tl-title { font-weight: 700; font-size: 1.06rem; margin-top: 3px; }
+    .tl-item .tl-meta { color: var(--muted); font-size: 0.92rem; margin-top: 2px; }
+
+    /* ---------- BRIEF LIST ---------- */
+    .brief-list { list-style: none; }
+    .brief-list li {
+      padding: 14px 0 14px 30px;
+      border-bottom: 1px solid var(--card-border);
+      position: relative; font-size: 1.04rem;
+    }
+    .brief-list li:last-child { border-bottom: none; }
+    .brief-list li::before {
+      content: '▹'; position: absolute; left: 4px;
+      color: var(--accent); font-weight: 700;
+      animation: nudge 2.4s ease-in-out infinite;
+    }
+    @keyframes nudge {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+
+    /* ---------- PUBLICATIONS ---------- */
+    .subhead {
+      font-size: 1.08rem; font-weight: 700;
+      margin: 30px 0 14px; display: flex; align-items: center;
+    }
+    .subhead:first-of-type { margin-top: 0; }
+    .subhead-mini {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin: 22px 0 10px; display: flex; align-items: center;
+    }
+    .count {
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: 9px; font-size: 0.72rem; font-weight: 700;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #fff; padding: 2px 9px; border-radius: 12px;
+      box-shadow: 0 2px 10px var(--glow);
+    }
+    .pub {
+      padding: 16px 18px; margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-size: 0.97rem; line-height: 1.7; color: var(--text);
+      list-style: none;
+      transition: all 0.25s ease;
+    }
+    body.light .pub { background: rgba(20, 30, 70, 0.03); }
+    .pub:hover {
+      border-color: var(--card-border);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(4px);
+    }
+    body.light .pub:hover { background: rgba(255, 255, 255, 0.9); }
+    .pub em { font-style: italic; }
+    .pub strong { color: var(--accent); }
+    ul { list-style: none; }
+
+    /* ---------- CONTACT ---------- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .contact-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 22px;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      color: var(--text); font-weight: 600; font-size: 0.9rem;
+      transition: all 0.3s var(--ease-spring);
+      overflow-wrap: anywhere;
+    }
+    .contact-card .ico {
+      font-size: 1.3rem; flex-shrink: 0;
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 4px 14px var(--glow);
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 14px 36px var(--glow);
+      color: var(--text);
+    }
+    .contact-card small { display: block; color: var(--muted); font-size: 0.72rem; font-weight: 500; }
+
+    /* ---------- STATS (Personal) ---------- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px; margin-bottom: 8px;
+    }
+    .stat-card {
+      text-align: center; padding: 26px 14px;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: all 0.35s var(--ease-spring);
+      position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 0%, var(--glow), transparent 70%);
+      opacity: 0; transition: opacity 0.35s ease;
+    }
+    .stat-card:hover { transform: translateY(-6px) scale(1.02); border-color: var(--accent); }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-card .s-emoji { font-size: 1.7rem; display: block; margin-bottom: 6px; }
+    .stat-card .s-num {
+      font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em;
+      line-height: 1.1; display: block;
+      background: linear-gradient(110deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-card .s-label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+
+    /* ---------- PLACES ACCORDIONS ---------- */
+    .places-group {
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--pg-color, var(--accent));
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      margin-bottom: 14px; overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .places-group:hover {
+      box-shadow: 0 14px 44px rgba(0,0,0,0.3), 0 0 24px -12px var(--pg-color, var(--accent));
+      transform: translateY(-2px);
+    }
+    body.light .places-group:hover { box-shadow: 0 14px 36px rgba(20,30,70,0.12); }
+    .places-group.homes { --pg-color: #f59e0b; }
+    .places-group.conferences { --pg-color: #34d399; }
+    .places-group.baseball { --pg-color: #38bdf8; }
+    .places-group.baduk { --pg-color: #a78bfa; }
+    .places-group.travel { --pg-color: #fb7185; }
+
+    .places-group > summary {
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer; list-style: none; user-select: none;
+      padding: 20px 26px; font-weight: 700; font-size: 1.02rem;
+    }
+    .places-group > summary::-webkit-details-marker { display: none; }
+    .places-group > summary::marker { content: ''; }
+    .places-group .pg-emoji { font-size: 1.25rem; }
+    .places-group > summary .count {
+      background: var(--pg-color, var(--accent));
+      box-shadow: 0 2px 10px color-mix(in srgb, var(--pg-color) 40%, transparent);
+    }
+    .places-group > summary::after {
+      content: ''; width: 7px; height: 7px; margin-left: auto;
+      border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+      transform: rotate(-45deg);
+      transition: transform 0.3s var(--ease-spring);
+    }
+    .places-group[open] > summary::after { transform: rotate(45deg); }
+    .places-group-content { padding: 0 26px 24px; }
+    .places-group .subhead-mini { color: var(--pg-color, var(--accent)); }
+
+    .entry {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 20px; padding: 12px 16px; margin-bottom: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      transition: all 0.22s ease;
+    }
+    body.light .entry { background: rgba(20, 30, 70, 0.035); }
+    .entry:hover {
+      background: rgba(255, 255, 255, 0.065);
+      transform: translateX(5px);
+    }
+    body.light .entry:hover { background: rgba(255, 255, 255, 0.95); }
+    .entry .title { font-weight: 700; font-size: 0.98rem; }
+    .entry .meta { color: var(--muted); font-size: 0.86rem; margin-top: 2px; }
+    .entry-date {
+      color: var(--muted); font-size: 0.8rem; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums; white-space: nowrap; padding-top: 3px;
+    }
+    .group-note {
+      font-size: 0.84rem; color: var(--muted); font-style: italic;
+      margin: 2px 0 14px;
+    }
+    .map-link {
+      font-size: 0.78rem; opacity: 0; margin-left: 6px;
+      vertical-align: middle; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .entry:hover .map-link { opacity: 0.6; }
+    .map-link:hover { opacity: 1 !important; }
+
+    /* ---------- CURRENTLY ---------- */
+    .currently-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 14px;
+    }
+    .currently-item {
+      display: flex; align-items: flex-start; gap: 13px;
+      padding: 20px;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s var(--ease-spring);
+    }
+    .currently-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 32px var(--glow);
+    }
+    .c-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1.2; }
+    .c-label {
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+    }
+    .c-value { font-size: 0.93rem; font-weight: 700; line-height: 1.35; }
+
+    .placeholder {
+      padding: 28px; text-align: center;
+      border: 1px dashed var(--card-border); border-radius: var(--radius);
+      color: var(--muted); font-size: 0.92rem;
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    footer {
+      position: relative; z-index: 2;
+      text-align: center; padding: 60px 24px 44px;
+      color: var(--muted); font-size: 0.84rem;
+    }
+    footer .heart {
+      display: inline-block;
+      animation: heartbeat 1.6s ease-in-out infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      12% { transform: scale(1.25); }
+      24% { transform: scale(1); }
+    }
+
+    /* ---------- SCROLL REVEAL ---------- */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.75s ease, transform 0.75s var(--ease-spring);
+      transition-delay: var(--rd, 0s);
+    }
+    [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+    /* ---------- TILT ---------- */
+    .tilt { transform-style: preserve-3d; will-change: transform; }
+
+    /* ---------- REDUCED MOTION ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001s !important;
+      }
+      [data-reveal] { opacity: 1; transform: none; }
+      #particles, #cursor-glow { display: none; }
+    }
+
+    /* ---------- MOBILE ---------- */
+    @media (max-width: 760px) {
+      html { scroll-padding-top: 132px; }
+      .topnav { flex-wrap: wrap; padding: 12px 16px; gap: 8px 12px; }
+      .brand { order: 0; font-size: 0.88rem; }
+      .nav-actions { order: 1; margin-left: auto; }
+      .views-nav { order: 2; flex-basis: 100%; }
+      .view-tab { flex: 1; text-align: center; }
+      .anchors { order: 3; flex-basis: 100%; justify-content: flex-start; }
+      .anchors a { padding: 6px 10px; font-size: 0.73rem; }
+      .hero { padding-top: 190px; min-height: 88vh; }
+      .hero-photo { width: 138px; height: 138px; }
+      .glass { padding: 22px 20px; }
+      section { padding: 34px 0; }
+      .section-head h2 { font-size: 1.25rem; }
+      .entry { flex-direction: column; gap: 4px; }
+      .entry-date { padding-top: 0; }
+      .places-group > summary { padding: 17px 18px; }
+      .places-group-content { padding: 0 14px 18px; }
+      .stat-card .s-num { font-size: 2rem; }
+      .map-link { opacity: 0.45; }
+    }
+  </style>
+</head>
+<body>
+  <div id="progress"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <nav class="topnav">
+    <a href="#top" class="brand">JIHUN YOON</a>
+
+    <nav class="views-nav" aria-label="Section">
+      <button class="view-tab active" data-view="research" type="button">Research</button>
+      <button class="view-tab" data-view="personal" type="button">Personal</button>
+    </nav>
+
+    <nav class="anchors" data-for="research" aria-label="Research sections">
+      <a href="#about">About</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#current-research">In Progress</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <nav class="anchors" data-for="personal" aria-label="Personal sections" hidden>
+      <a href="#p-places">Places</a>
+      <a href="#p-currently">Currently</a>
+      <a href="#p-blog">Blog</a>
+      <a href="#p-interests">Interests</a>
+      <a href="#p-contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="lang-switch" aria-label="Language">
+        <button type="button" data-lang="en" class="active">EN</button>
+        <button type="button" data-lang="ko">한국어</button>
+      </div>
+      <button id="theme-toggle" type="button" aria-label="Toggle theme">☀</button>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ============ RESEARCH VIEW ============ -->
+    <div class="view" data-view="research">
+      <header class="hero">
+        <div class="hero-photo-wrap">
+          <img src="profile-research.png" alt="Jihun Yoon" class="hero-photo">
+        </div>
+        <h1>Jihun Yoon</h1>
+        <p class="name-kr">윤지훈</p>
+        <p class="typewriter"><span class="tw-prefix lang-en">I work on&nbsp;</span><span class="tw-prefix lang-ko">저는&nbsp;</span><span class="tw-text"></span><span class="tw-cursor"></span></p>
+        <div class="hero-chips">
+          <a class="chip" href="mailto:yoon2839@chilab.kr"><span class="ico">✉️</span> yoon2839@chilab.kr</a>
+          <a class="chip" href="https://www.chilab.kr/" target="_blank" rel="noopener"><span class="ico">🏥</span> CHI Lab</a>
+          <a class="chip" href="https://scholar.google.com/citations?user=ChLogK0AAAAJ&amp;hl=ko" target="_blank" rel="noopener"><span class="ico">🎓</span> Google Scholar</a>
+        </div>
+        <div class="scroll-hint" aria-hidden="true">▼</div>
+      </header>
+
+      <div class="container">
+        <section class="about" id="about" data-reveal>
+          <div class="section-head">
+            <span class="idx">01</span><h2>About</h2><span class="rule"></span>
+          </div>
+          <div class="glass tilt">
+            <p class="about-text lang-en">Senior Data Scientist and Researcher at <a href="https://www.chilab.kr/" target="_blank" rel="noopener">CHI Lab</a>, Asan Medical Center. I work at the intersection of <strong>statistics</strong>, <strong>machine learning</strong>, and <strong>clinical epidemiology</strong>, drawing on Korean national health claims data (NHIS, HIRA).</p>
+            <p class="about-text lang-ko">서울아산병원 <a href="https://www.chilab.kr/" target="_blank" rel="noopener">CHI Lab</a>의 시니어 데이터 사이언티스트 · 연구원. <strong>통계</strong>, <strong>머신러닝</strong>, <strong>임상역학</strong>의 교차점에서 국민건강보험공단(NHIS)·건강보험심사평가원(HIRA) 청구자료를 활용해 연구합니다.</p>
+          </div>
+        </section>
+
+        <section id="timeline" data-reveal>
+          <div class="section-head">
+            <span class="idx">02</span><h2 class="lang-en">Timeline</h2><h2 class="lang-ko">연혁</h2><span class="rule"></span>
+          </div>
+          <div class="glass">
+            <h3 class="subhead">Research Experience</h3>
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-date">Jun 2025 – Present</div>
+                <div class="tl-title">Senior Data Scientist, Researcher</div>
+                <div class="tl-meta"><a href="https://www.chilab.kr/" target="_blank" rel="noopener">CHI Lab</a>, Asan Medical Center</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-date">2023 – 2024</div>
+                <div class="tl-title">Researcher</div>
+                <div class="tl-meta">Dongguk University Medical Center</div>
+              </div>
+            </div>
+
+            <h3 class="subhead">Education</h3>
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-date">2023</div>
+                <div class="tl-title">M.S. in Statistics and Data Science</div>
+                <div class="tl-meta">Dongguk University</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-date">2018</div>
+                <div class="tl-title">B.S. in Statistics</div>
+                <div class="tl-meta">Cheongju University</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="current-research" data-reveal>
+          <div class="section-head">
+            <span class="idx">03</span><h2>Research in Progress</h2><span class="rule"></span>
+          </div>
+          <div class="glass tilt">
+            <ul class="brief-list">
+              <li>Cardiovascular disease using NHIS claims data</li>
+              <li>Hematology &amp; diabetes outcomes using Asan ABLE data</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="publications" data-reveal>
+          <div class="section-head">
+            <span class="idx">04</span><h2>Publications</h2><span class="rule"></span>
+          </div>
+          <div class="glass">
+            <h3 class="subhead">Journal Articles <span class="count">2</span></h3>
+
+            <h4 class="subhead-mini">International <span class="count">1</span></h4>
+            <ul>
+              <li class="pub">
+                Han SA, <strong>Yoon J</strong>, Kim BH, Park JH, Lim YS, Kim YB, Cho CG, Park SW, et al. &ldquo;<a href="https://doi.org/10.4193/Rhin24.209" target="_blank" rel="noopener">Real-world treatment of chronic rhinosinusitis with dupilumab and omalizumab: results from the Korean National Health Insurance Service database</a>.&rdquo; <em>Rhinology.</em> 2025;63(2):172&ndash;179. <a href="https://pubmed.ncbi.nlm.nih.gov/39968898/" target="_blank" rel="noopener">PubMed</a>
+              </li>
+            </ul>
+
+            <h4 class="subhead-mini">Domestic <span class="count">1</span></h4>
+            <ul>
+              <li class="pub">
+                Lee S, Seong SM, Oh H, <strong>Yoon J</strong>, Kim BH, Park JH, Lim YS, Cho CG, Park SW, Kim JY. &ldquo;<a href="https://doi.org/10.18787/jr.2025.00009" target="_blank" rel="noopener">Nasal Nitric Oxide as an Objective Evaluation Tool for Treatment Response in Chronic Rhinitis</a>.&rdquo; <em>J Rhinol.</em> 2025;32(1):40&ndash;47.
+              </li>
+            </ul>
+
+            <h3 class="subhead">Thesis</h3>
+            <ul>
+              <li class="pub lang-en">
+                <strong>Yoon J</strong>. &ldquo;<a href="https://www.riss.kr/link?id=T16623384" target="_blank" rel="noopener">A Comparative Study on Pythagorean Win Percentage and Statistical Models for Win Percentage Estimation in MLB and KBO</a>.&rdquo; M.S. Thesis, Dongguk University, 2023. Advisor: Hong-Yeob An.
+              </li>
+              <li class="pub lang-ko">
+                <strong>윤지훈</strong>. &ldquo;<a href="https://www.riss.kr/link?id=T16623384" target="_blank" rel="noopener">MLB와 KBO의 피타고라스 승률과 승률 추정 통계모형에 대한 비교 연구</a>.&rdquo; 석사학위논문, 동국대학교, 2023. 지도교수: 안홍엽.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="contact" data-reveal>
+          <div class="section-head">
+            <span class="idx">05</span><h2>Contact</h2><span class="rule"></span>
+          </div>
+          <div class="contact-grid">
+            <a class="contact-card" href="mailto:yoon2839@chilab.kr">
+              <span class="ico">✉️</span>
+              <span><small class="lang-en">Work</small><small class="lang-ko">직장</small>yoon2839@chilab.kr</span>
+            </a>
+            <a class="contact-card" href="mailto:qdbswlgns@gmail.com">
+              <span class="ico">📮</span>
+              <span><small class="lang-en">Personal</small><small class="lang-ko">개인</small>qdbswlgns@gmail.com</span>
+            </a>
+            <a class="contact-card" href="https://scholar.google.com/citations?user=ChLogK0AAAAJ&amp;hl=ko" target="_blank" rel="noopener">
+              <span class="ico">🎓</span>
+              <span><small>Google Scholar</small><span class="lang-en">Publications</span><span class="lang-ko">논문 목록</span></span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ PERSONAL VIEW ============ -->
+    <div class="view" data-view="personal" hidden>
+      <header class="hero">
+        <div class="hero-photo-wrap">
+          <img src="profile-personal.jpg" alt="Jihun Yoon" class="hero-photo">
+        </div>
+        <h1 class="lang-en">Personal</h1>
+        <h1 class="lang-ko">일상</h1>
+        <p class="typewriter"><span class="tw-text"></span><span class="tw-cursor"></span></p>
+        <div class="hero-chips">
+          <a class="chip" href="#p-places"><span class="ico">📍</span> <span class="lang-en">Places I've Been</span><span class="lang-ko">가본 곳</span></a>
+          <a class="chip" href="mailto:qdbswlgns@gmail.com"><span class="ico">✉️</span> qdbswlgns@gmail.com</a>
+        </div>
+        <div class="scroll-hint" aria-hidden="true">▼</div>
+      </header>
+
+      <div class="container">
+        <section id="p-stats" data-reveal>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="s-emoji">⚾</span>
+              <span class="s-num" data-target="17">0</span>
+              <span class="s-label lang-en">stadiums</span>
+              <span class="s-label lang-ko">야구장</span>
+            </div>
+            <div class="stat-card">
+              <span class="s-emoji">🌍</span>
+              <span class="s-num" data-target="6">0</span>
+              <span class="s-label lang-en">countries</span>
+              <span class="s-label lang-ko">나라</span>
+            </div>
+            <div class="stat-card">
+              <span class="s-emoji">⚫</span>
+              <span class="s-num" data-target="4">0</span>
+              <span class="s-label lang-en">tournaments</span>
+              <span class="s-label lang-ko">바둑대회</span>
+            </div>
+            <div class="stat-card">
+              <span class="s-emoji">✈️</span>
+              <span class="s-num" data-target="27">0</span>
+              <span class="s-label lang-en">cities</span>
+              <span class="s-label lang-ko">도시</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="p-places" data-reveal>
+          <div class="section-head">
+            <span class="idx">01</span><h2>Places I've Been</h2><span class="rule"></span>
+          </div>
+
+          <details class="places-group homes" id="p-places-homes">
+            <summary><span class="pg-emoji">🏠</span> Second Homes <span class="count">3</span></summary>
+            <div class="places-group-content">
+              <ul>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">Gainesville, USA</div>
+                    <div class="meta">University of Florida, English Language Institute (ELI)</div>
+                  </div>
+                  <div class="entry-date">2017</div>
+                </li>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">Cheorwon, Korea</div>
+                    <div class="meta">6th Infantry Division · Military service</div>
+                  </div>
+                  <div class="entry-date">2019 – 2021</div>
+                </li>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">Seogwipo, Jeju</div>
+                    <div class="meta">Mido Guesthouse · Month-long stay</div>
+                  </div>
+                  <div class="entry-date">2024</div>
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="places-group conferences" id="p-places-conferences">
+            <summary><span class="pg-emoji">🎤</span> Conferences <span class="count">3</span></summary>
+            <div class="places-group-content">
+              <h4 class="subhead-mini">International <span class="count">2</span></h4>
+              <ul>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">Rhinology Conference</div>
+                    <div class="meta">Tokyo, Japan</div>
+                  </div>
+                  <div class="entry-date">Apr 2024</div>
+                </li>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">NeurIPS 2025</div>
+                    <div class="meta">San Diego, USA</div>
+                  </div>
+                  <div class="entry-date">Dec 2025</div>
+                </li>
+              </ul>
+
+              <h4 class="subhead-mini">Domestic <span class="count">1</span></h4>
+              <ul>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">Korean Neuropsychiatric Association (KNPA) Fall Conference 2024</div>
+                    <div class="meta">Yeosu, Korea · 대한신경정신의학회 추계학술대회</div>
+                  </div>
+                  <div class="entry-date">Nov 2024</div>
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="places-group baseball" id="p-places-baseball">
+            <summary><span class="pg-emoji">⚾</span> Baseball Stadiums <span class="count">17</span></summary>
+            <div class="places-group-content">
+              <h4 class="subhead-mini">USA · MLB <span class="count">3</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Busch Stadium</div>
+                  <div class="meta">St. Louis, Missouri · St. Louis Cardinals</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">PNC Park</div>
+                  <div class="meta">Pittsburgh, Pennsylvania · Pittsburgh Pirates</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Target Field</div>
+                  <div class="meta">Minneapolis, Minnesota · Minnesota Twins</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">Japan · NPB <span class="count">1</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Kyocera Dome Osaka</div>
+                  <div class="meta">Osaka, Japan · Orix Buffaloes</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">Korea · KBO — Current <span class="count">9</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Jamsil Baseball Stadium</div>
+                  <div class="meta">Seoul · LG Twins &amp; Doosan Bears</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Gocheok Sky Dome</div>
+                  <div class="meta">Seoul · Kiwoom Heroes</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Incheon SSG Landers Field</div>
+                  <div class="meta">Incheon · SSG Landers</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Suwon KT Wiz Park</div>
+                  <div class="meta">Suwon · KT Wiz</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Daejeon Hanwha Life Ballpark</div>
+                  <div class="meta">Daejeon · Hanwha Eagles</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Changwon NC Park</div>
+                  <div class="meta">Changwon · NC Dinos</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Daegu Samsung Lions Park</div>
+                  <div class="meta">Daegu · Samsung Lions</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Gwangju-KIA Champions Field</div>
+                  <div class="meta">Gwangju · KIA Tigers</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Sajik Baseball Stadium</div>
+                  <div class="meta">Busan · Lotte Giants</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">Korea · KBO — Secondary / Former <span class="count">4</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Pohang Baseball Stadium</div>
+                  <div class="meta">Pohang · Samsung Lions (secondary)</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Cheongju Baseball Stadium</div>
+                  <div class="meta">Cheongju · Hanwha Eagles (secondary)</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Daegu Civic Stadium</div>
+                  <div class="meta">Daegu · Samsung Lions (former, until 2015)</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Hanwha Life Eagles Park</div>
+                  <div class="meta">Daejeon · Hanwha Eagles (former, until 2024)</div>
+                </div></li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="places-group baduk" id="p-places-baduk">
+            <summary><span class="pg-emoji">⚫</span> Baduk Tournaments <span class="count">4</span></summary>
+            <div class="places-group-content">
+              <p class="group-note">Notable travels only — countless local games omitted.</p>
+
+              <h4 class="subhead-mini">International <span class="count">3</span></h4>
+              <ul>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">3rd Ing Cup World University Baduk Championship</div>
+                    <div class="meta">Toronto, Canada · 3rd Place (B Group)</div>
+                  </div>
+                  <div class="entry-date">2016</div>
+                </li>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">4th Ing Cup World University Baduk Championship</div>
+                    <div class="meta">Bangkok, Thailand</div>
+                  </div>
+                  <div class="entry-date">2017</div>
+                </li>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">5th Ing Cup World University Baduk Championship</div>
+                    <div class="meta">Cambridge, United Kingdom</div>
+                  </div>
+                  <div class="entry-date">2018</div>
+                </li>
+              </ul>
+
+              <h4 class="subhead-mini">Domestic <span class="count">1</span></h4>
+              <ul>
+                <li class="entry">
+                  <div class="entry-main">
+                    <div class="title">National University Sinan Sea Salt Baduk Tournament</div>
+                    <div class="meta">Bigeumdo, Sinan, Korea · 전국 대학생 신안천일염 바둑대회</div>
+                  </div>
+                  <div class="entry-date">2015 · 2017 · 2018 · 2022</div>
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="places-group travel" id="p-places-travel">
+            <summary><span class="pg-emoji">✈️</span> International Travel <span class="count">27</span></summary>
+            <div class="places-group-content">
+              <h4 class="subhead-mini">USA <span class="count">14</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">California</div>
+                  <div class="meta">Los Angeles · Anaheim · El Monte</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Nevada</div>
+                  <div class="meta">Las Vegas</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Arizona</div>
+                  <div class="meta">Grand Canyon</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Florida</div>
+                  <div class="meta">Tampa · Orlando</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Pennsylvania</div>
+                  <div class="meta">Philadelphia · Pittsburgh</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">New York</div>
+                  <div class="meta">New York City</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Massachusetts</div>
+                  <div class="meta">Boston</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Illinois</div>
+                  <div class="meta">Chicago</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Missouri</div>
+                  <div class="meta">St. Louis</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Minnesota</div>
+                  <div class="meta">Minneapolis</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">Canada <span class="count">4</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Ontario</div>
+                  <div class="meta">Ottawa · Toronto</div>
+                </div></li>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Quebec</div>
+                  <div class="meta">Montreal · Quebec City</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">United Kingdom <span class="count">2</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">England</div>
+                  <div class="meta">London · Cambridge</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">France <span class="count">1</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Paris</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">Japan <span class="count">5</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Osaka · Kyoto · Nagoya · Sapporo · Otaru</div>
+                </div></li>
+              </ul>
+
+              <h4 class="subhead-mini">Thailand <span class="count">1</span></h4>
+              <ul>
+                <li class="entry"><div class="entry-main">
+                  <div class="title">Bangkok</div>
+                </div></li>
+              </ul>
+            </div>
+          </details>
+        </section>
+
+        <section id="p-currently" data-reveal>
+          <div class="section-head">
+            <span class="idx">02</span><h2>Currently</h2><span class="rule"></span>
+          </div>
+          <div class="currently-grid">
+            <div class="currently-item">
+              <span class="c-icon">📍</span>
+              <div>
+                <div class="c-label lang-en">Based in</div>
+                <div class="c-label lang-ko">위치</div>
+                <div class="c-value lang-en">Seoul, Korea</div>
+                <div class="c-value lang-ko">서울</div>
+              </div>
+            </div>
+            <div class="currently-item">
+              <span class="c-icon">🎓</span>
+              <div>
+                <div class="c-label lang-en">Studying</div>
+                <div class="c-label lang-ko">공부 중</div>
+                <div class="c-value lang-en">Clinical Epidemiology</div>
+                <div class="c-value lang-ko">임상역학</div>
+              </div>
+            </div>
+            <div class="currently-item">
+              <span class="c-icon">⚾</span>
+              <div>
+                <div class="c-label lang-en">Following</div>
+                <div class="c-label lang-ko">응원 중</div>
+                <div class="c-value lang-en">Samsung Lions (KBO)</div>
+                <div class="c-value lang-ko">삼성 라이온즈 팬</div>
+              </div>
+            </div>
+            <div class="currently-item">
+              <span class="c-icon">🎯</span>
+              <div>
+                <div class="c-label lang-en">Planning</div>
+                <div class="c-label lang-ko">준비 중</div>
+                <div class="c-value lang-en">PhD application</div>
+                <div class="c-value lang-ko">박사 진학</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="p-blog" data-reveal>
+          <div class="section-head">
+            <span class="idx">03</span><h2>Blog</h2><span class="rule"></span>
+          </div>
+          <div class="placeholder">
+            <p>네이버 블로그 또는 다른 플랫폼 블로그 링크를 여기에 추가하세요.<br>
+            예: <code>&lt;a href="https://blog.naver.com/your-id"&gt;Naver Blog ↗&lt;/a&gt;</code></p>
+          </div>
+        </section>
+
+        <section id="p-interests" data-reveal>
+          <div class="section-head">
+            <span class="idx">04</span><h2>Interests</h2><span class="rule"></span>
+          </div>
+          <div class="placeholder">
+            <p>취미, 좋아하는 책, 운동 등 자유롭게.</p>
+          </div>
+        </section>
+
+        <section id="p-contact" data-reveal>
+          <div class="section-head">
+            <span class="idx">05</span><h2>Contact</h2><span class="rule"></span>
+          </div>
+          <div class="contact-grid">
+            <a class="contact-card" href="mailto:qdbswlgns@gmail.com">
+              <span class="ico">✉️</span>
+              <span><small class="lang-en">Personal</small><small class="lang-ko">개인</small>qdbswlgns@gmail.com</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>&copy; 2026 Jihun Yoon · <span class="lang-en">made with</span><span class="lang-ko">with</span> <span class="heart">❤️</span></footer>
+
+  <script>
+    (function () {
+      'use strict';
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const params = new URLSearchParams(location.search);
+
+      /* ===== PRO MODE (research-only; ?pro or /pro path) ===== */
+      const proParam = params.has('pro') && params.get('pro') !== '0';
+      const proPath = /\/pro\/?$/.test(location.pathname);
+      const proMode = proParam || proPath;
+      if (proMode) document.body.classList.add('pro-mode');
+
+      /* ===== THEME (dark default / light) ===== */
+      const themeBtn = document.getElementById('theme-toggle');
+      function setTheme(light) {
+        document.body.classList.toggle('light', light);
+        themeBtn.textContent = light ? '☾' : '☀';
+        try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch (e) {}
+      }
+      themeBtn.addEventListener('click', () => setTheme(!document.body.classList.contains('light')));
+      let savedTheme = null;
+      try { savedTheme = localStorage.getItem('theme'); } catch (e) {}
+      if (savedTheme === 'light' || params.get('theme') === 'light') setTheme(true);
+
+      /* ===== SCROLL PROGRESS BAR ===== */
+      const progress = document.getElementById('progress');
+      function updateProgress() {
+        const h = document.documentElement;
+        const max = h.scrollHeight - h.clientHeight;
+        progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      }
+      addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+
+      /* ===== CURSOR GLOW ===== */
+      const glow = document.getElementById('cursor-glow');
+      if (!reduceMotion && matchMedia('(hover: hover)').matches) {
+        let gx = 0, gy = 0, tx = 0, ty = 0, glowRaf = null;
+        addEventListener('pointermove', e => {
+          tx = e.clientX; ty = e.clientY;
+          document.body.classList.add('has-cursor');
+          if (!glowRaf) glowRaf = requestAnimationFrame(glowTick);
+        }, { passive: true });
+        function glowTick() {
+          gx += (tx - gx) * 0.12; gy += (ty - gy) * 0.12;
+          glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
+          glowRaf = (Math.abs(tx - gx) + Math.abs(ty - gy) > 0.3)
+            ? requestAnimationFrame(glowTick) : null;
+        }
+      }
+
+      /* ===== PARTICLE CONSTELLATION ===== */
+      const canvas = document.getElementById('particles');
+      if (!reduceMotion) {
+        const ctx = canvas.getContext('2d');
+        let W, H, pts = [];
+        const mouse = { x: -9999, y: -9999 };
+        const LINK = 130;
+
+        function accentColor() {
+          return getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#38bdf8';
+        }
+        function resize() {
+          W = canvas.width = innerWidth;
+          H = canvas.height = innerHeight;
+          const n = Math.min(90, Math.floor(W * H / 16000));
+          pts = Array.from({ length: n }, () => ({
+            x: Math.random() * W, y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 1.6 + 0.6
+          }));
+        }
+        addEventListener('resize', resize); resize();
+        addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+        addEventListener('pointerleave', () => { mouse.x = mouse.y = -9999; });
+
+        function hexToRgb(c) {
+          if (c.startsWith('#')) {
+            const n = parseInt(c.length === 4
+              ? c.slice(1).split('').map(x => x + x).join('') : c.slice(1), 16);
+            return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+          }
+          const m = c.match(/\d+/g);
+          return m ? m.slice(0, 3).map(Number) : [56, 189, 248];
+        }
+
+        let frame = 0;
+        (function draw() {
+          ctx.clearRect(0, 0, W, H);
+          if (frame++ % 30 === 0) draw.rgb = hexToRgb(accentColor());
+          const [r, g, b] = draw.rgb || [56, 189, 248];
+          const light = document.body.classList.contains('light');
+          const baseA = light ? 0.35 : 0.55;
+
+          for (const p of pts) {
+            // gentle mouse attraction
+            const dx = mouse.x - p.x, dy = mouse.y - p.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < 32400 && d2 > 1) {
+              const f = 0.012 / Math.sqrt(d2);
+              p.vx += dx * f; p.vy += dy * f;
+            }
+            p.vx *= 0.995; p.vy *= 0.995;
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > W) p.vx *= -1;
+            if (p.y < 0 || p.y > H) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r},${g},${b},${baseA})`;
+            ctx.fill();
+          }
+          for (let i = 0; i < pts.length; i++) {
+            for (let j = i + 1; j < pts.length; j++) {
+              const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+              const d = Math.hypot(dx, dy);
+              if (d < LINK) {
+                ctx.beginPath();
+                ctx.moveTo(pts[i].x, pts[i].y);
+                ctx.lineTo(pts[j].x, pts[j].y);
+                ctx.strokeStyle = `rgba(${r},${g},${b},${(1 - d / LINK) * (light ? 0.12 : 0.16)})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+              }
+            }
+          }
+          requestAnimationFrame(draw);
+        })();
+      }
+
+      /* ===== TYPEWRITER ===== */
+      const TW = {
+        research: {
+          en: ['statistics.', 'machine learning.', 'clinical epidemiology.', 'NHIS · HIRA claims data.'],
+          ko: ['통계를 연구합니다.', '머신러닝을 연구합니다.', '임상역학을 연구합니다.', 'NHIS · HIRA 청구자료를 다룹니다.']
+        },
+        personal: {
+          en: ['Things outside the lab.', 'Baseball stadiums. ⚾', 'Baduk tournaments. ⚫', 'Travel stories. ✈️'],
+          ko: ['연구실 밖의 이야기들.', '전국 야구장 투어. ⚾', '바둑대회 원정기. ⚫', '여행의 기록들. ✈️']
+        }
+      };
+      let twTimer = null;
+      function startTypewriter(view) {
+        clearTimeout(twTimer);
+        const el = document.querySelector(`[data-view="${view}"] .tw-text`);
+        if (!el) return;
+        const lang = document.body.classList.contains('lang-ko') ? 'ko' : 'en';
+        const phrases = TW[view][lang];
+        if (reduceMotion) { el.textContent = phrases[0]; return; }
+        let pi = 0, ci = 0, deleting = false;
+        (function tick() {
+          const phrase = phrases[pi];
+          if (!deleting) {
+            ci++;
+            el.textContent = phrase.slice(0, ci);
+            if (ci === phrase.length) { deleting = true; twTimer = setTimeout(tick, 2100); return; }
+            twTimer = setTimeout(tick, 55 + Math.random() * 55);
+          } else {
+            ci--;
+            el.textContent = phrase.slice(0, ci);
+            if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; twTimer = setTimeout(tick, 380); return; }
+            twTimer = setTimeout(tick, 26);
+          }
+        })();
+      }
+
+      /* ===== SCROLL REVEAL ===== */
+      const revealIO = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('revealed');
+          revealIO.unobserve(e.target);
+        });
+      }, { threshold: 0.08 });
+      function observeReveals(root) {
+        root.querySelectorAll('[data-reveal]:not(.revealed)').forEach((el, i) => {
+          el.style.setProperty('--rd', (i % 4) * 0.08 + 's');
+          revealIO.observe(el);
+        });
+      }
+      observeReveals(document);
+
+      /* ===== 3D TILT ===== */
+      if (!reduceMotion && matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.tilt').forEach(card => {
+          card.addEventListener('pointermove', e => {
+            const rc = card.getBoundingClientRect();
+            const px = (e.clientX - rc.left) / rc.width - 0.5;
+            const py = (e.clientY - rc.top) / rc.height - 0.5;
+            card.style.transform =
+              `perspective(900px) rotateY(${px * 6}deg) rotateX(${py * -6}deg) translateY(-2px)`;
+          });
+          card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+        });
+      }
+
+      /* ===== COUNTERS ===== */
+      let countersDone = false;
+      function animateCounters() {
+        if (countersDone) return;
+        countersDone = true;
+        document.querySelectorAll('.s-num[data-target]').forEach(el => {
+          const tgt = +el.dataset.target, dur = 1200, t0 = performance.now();
+          if (reduceMotion) { el.textContent = tgt; return; }
+          (function tick(now) {
+            const p = Math.min((now - t0) / dur, 1);
+            el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * tgt);
+            if (p < 1) requestAnimationFrame(tick);
+          })(performance.now());
+        });
+      }
+      const statsIO = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { animateCounters(); statsIO.disconnect(); } });
+      }, { threshold: 0.3 });
+      const statsEl = document.getElementById('p-stats');
+      if (statsEl) statsIO.observe(statsEl);
+
+      /* ===== VIEW SWITCHING ===== */
+      const tabs = document.querySelectorAll('.view-tab');
+      const views = document.querySelectorAll('.view');
+      const anchorBlocks = document.querySelectorAll('.anchors');
+
+      function switchView(name) {
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.view === name));
+        views.forEach(v => v.hidden = v.dataset.view !== name);
+        anchorBlocks.forEach(a => a.hidden = a.dataset.for !== name);
+        document.body.classList.toggle('theme-personal', name === 'personal');
+        startTypewriter(name);
+        observeReveals(document);
+        try { history.replaceState(null, '', '#' + name); } catch (e) {}
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        updateProgress();
+      }
+      tabs.forEach(t => t.addEventListener('click', () => switchView(t.dataset.view)));
+
+      /* ===== SCROLLSPY ===== */
+      const spyIO = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          const id = e.target.id;
+          document.querySelectorAll('.anchors a').forEach(a =>
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      document.querySelectorAll('section[id]').forEach(s => spyIO.observe(s));
+
+      /* ===================== LANGUAGE (EN / KO) =====================
+         Text-node dictionary. Anything NOT listed here (publication
+         citations, thesis, names, emails) stays in English. */
+      const KO = {
+        // Tabs & nav
+        'Research': '연구', 'Personal': '일상',
+        'About': '소개', 'Timeline': '연혁',
+        'In Progress': '진행 중', 'Publications': '논문', 'Contact': '연락처',
+        'Places': '가본 곳', 'Blog': '블로그', 'Interests': '관심사',
+        'Currently': '요즘',
+        // Section titles
+        'Research Experience': '연구 경력',
+        'Education': '학력',
+        'Research in Progress': '진행 중인 연구',
+        "Places I've Been": '가본 곳',
+        // Education
+        'M.S. in Statistics and Data Science': '통계데이터사이언스학과 석사',
+        'Dongguk University': '동국대학교',
+        'B.S. in Statistics': '통계학과 학사',
+        'Cheongju University': '청주대학교',
+        // Experience
+        ', Asan Medical Center': ', 서울아산병원',
+        'Senior Data Scientist, Researcher': '시니어 데이터 사이언티스트 · 연구원',
+        'Researcher': '연구원',
+        'Dongguk University Medical Center': '동국대학교 의료원',
+        'Jun 2025 – Present': '2025년 6월 – 현재',
+        // In progress
+        'Cardiovascular disease using NHIS claims data': '국민건강보험공단(NHIS) 청구자료 기반 심혈관질환 연구',
+        'Hematology & diabetes outcomes using Asan ABLE data': '서울아산병원 ABLE 데이터 기반 혈액내과·당뇨 연구',
+        // Publications structure (citations stay English)
+        'Journal Articles': '학술지 논문',
+        'International': '국제', 'Domestic': '국내', 'Thesis': '학위논문',
+        // Places — Second Homes
+        'Second Homes': '제2의 고향',
+        'Gainesville, USA': '게인즈빌, 미국',
+        'University of Florida, English Language Institute (ELI)': '플로리다대학교 영어연수원 (UF ELI)',
+        'Cheorwon, Korea': '철원, 강원도',
+        '6th Infantry Division · Military service': '육군 제6보병사단 · 군 복무',
+        'Seogwipo, Jeju': '서귀포, 제주',
+        'Mido Guesthouse · Month-long stay': '미도게스트하우스 · 한 달 살기',
+        // Conferences
+        'Conferences': '학회',
+        'Rhinology Conference': '비과학 학회',
+        'Tokyo, Japan': '도쿄, 일본',
+        'San Diego, USA': '샌디에이고, 미국',
+        'Korean Neuropsychiatric Association (KNPA) Fall Conference 2024': '대한신경정신의학회 추계학술대회 2024',
+        'Yeosu, Korea · 대한신경정신의학회 추계학술대회': '여수, 전라남도',
+        'Apr 2024': '2024년 4월', 'Dec 2025': '2025년 12월', 'Nov 2024': '2024년 11월',
+        // Baseball
+        'Baseball Stadiums': '야구장',
+        'USA · MLB': '미국 · MLB', 'Japan · NPB': '일본 · NPB',
+        'Korea · KBO — Current': '한국 · KBO — 현재 구장',
+        'Korea · KBO — Secondary / Former': '한국 · KBO — 제2 / 옛 구장',
+        'Busch Stadium': '부시 스타디움',
+        'St. Louis, Missouri · St. Louis Cardinals': '세인트루이스, 미주리 · 카디널스',
+        'PNC Park': 'PNC 파크',
+        'Pittsburgh, Pennsylvania · Pittsburgh Pirates': '피츠버그, 펜실베이니아 · 파이리츠',
+        'Target Field': '타깃 필드',
+        'Minneapolis, Minnesota · Minnesota Twins': '미니애폴리스, 미네소타 · 트윈스',
+        'Kyocera Dome Osaka': '교세라돔 오사카',
+        'Osaka, Japan · Orix Buffaloes': '오사카 · 오릭스 버팔로스',
+        'Jamsil Baseball Stadium': '잠실야구장',
+        'Seoul · LG Twins & Doosan Bears': '서울 · LG 트윈스 & 두산 베어스',
+        'Gocheok Sky Dome': '고척스카이돔',
+        'Seoul · Kiwoom Heroes': '서울 · 키움 히어로즈',
+        'Incheon SSG Landers Field': '인천 SSG랜더스필드',
+        'Incheon · SSG Landers': '인천 · SSG 랜더스',
+        'Suwon KT Wiz Park': '수원 KT위즈파크',
+        'Suwon · KT Wiz': '수원 · KT 위즈',
+        'Daejeon Hanwha Life Ballpark': '대전 한화생명볼파크',
+        'Daejeon · Hanwha Eagles': '대전 · 한화 이글스',
+        'Changwon NC Park': '창원 NC파크',
+        'Changwon · NC Dinos': '창원 · NC 다이노스',
+        'Daegu Samsung Lions Park': '대구 삼성라이온즈파크',
+        'Daegu · Samsung Lions': '대구 · 삼성 라이온즈',
+        'Gwangju-KIA Champions Field': '광주-기아 챔피언스필드',
+        'Gwangju · KIA Tigers': '광주 · KIA 타이거즈',
+        'Sajik Baseball Stadium': '사직야구장',
+        'Busan · Lotte Giants': '부산 · 롯데 자이언츠',
+        'Pohang Baseball Stadium': '포항야구장',
+        'Pohang · Samsung Lions (secondary)': '포항 · 삼성 라이온즈 (제2구장)',
+        'Cheongju Baseball Stadium': '청주야구장',
+        'Cheongju · Hanwha Eagles (secondary)': '청주 · 한화 이글스 (제2구장)',
+        'Daegu Civic Stadium': '대구시민운동장 야구장',
+        'Daegu · Samsung Lions (former, until 2015)': '대구 · 삼성 라이온즈 (옛 홈, ~2015)',
+        'Hanwha Life Eagles Park': '한화생명 이글스파크',
+        'Daejeon · Hanwha Eagles (former, until 2024)': '대전 · 한화 이글스 (옛 홈, ~2024)',
+        // Baduk
+        'Baduk Tournaments': '바둑대회',
+        'Notable travels only — countless local games omitted.': '멀리 떠난 대회만 — 가까운 대국은 셀 수 없이 많아 생략.',
+        '3rd Ing Cup World University Baduk Championship': '제3회 응씨배 세계 대학생 바둑대회',
+        'Toronto, Canada · 3rd Place (B Group)': '토론토, 캐나다 · B조 3위',
+        '4th Ing Cup World University Baduk Championship': '제4회 응씨배 세계 대학생 바둑대회',
+        'Bangkok, Thailand': '방콕, 태국',
+        '5th Ing Cup World University Baduk Championship': '제5회 응씨배 세계 대학생 바둑대회',
+        'Cambridge, United Kingdom': '케임브리지, 영국',
+        'National University Sinan Sea Salt Baduk Tournament': '전국 대학생 신안천일염 바둑대회',
+        'Bigeumdo, Sinan, Korea · 전국 대학생 신안천일염 바둑대회': '신안 비금도, 전라남도',
+        // Travel
+        'International Travel': '해외여행',
+        'USA': '미국', 'Canada': '캐나다', 'United Kingdom': '영국',
+        'France': '프랑스', 'Japan': '일본', 'Thailand': '태국',
+        'California': '캘리포니아',
+        'Los Angeles · Anaheim · El Monte': '로스앤젤레스 · 애너하임 · 엘몬테',
+        'Nevada': '네바다', 'Las Vegas': '라스베이거스',
+        'Arizona': '애리조나', 'Grand Canyon': '그랜드캐니언',
+        'Florida': '플로리다', 'Tampa · Orlando': '탬파 · 올랜도',
+        'Pennsylvania': '펜실베이니아', 'Philadelphia · Pittsburgh': '필라델피아 · 피츠버그',
+        'New York': '뉴욕', 'New York City': '뉴욕시',
+        'Massachusetts': '매사추세츠', 'Boston': '보스턴',
+        'Illinois': '일리노이', 'Chicago': '시카고',
+        'Missouri': '미주리', 'St. Louis': '세인트루이스',
+        'Minnesota': '미네소타', 'Minneapolis': '미니애폴리스',
+        'Ontario': '온타리오', 'Ottawa · Toronto': '오타와 · 토론토',
+        'Quebec': '퀘벡', 'Montreal · Quebec City': '몬트리올 · 퀘벡시티',
+        'England': '잉글랜드', 'London · Cambridge': '런던 · 케임브리지',
+        'Paris': '파리',
+        'Osaka · Kyoto · Nagoya · Sapporo · Otaru': '오사카 · 교토 · 나고야 · 삿포로 · 오타루',
+        'Bangkok': '방콕'
+      };
+
+      const langBtns = document.querySelectorAll('.lang-switch button');
+
+      function setLang(ko) {
+        document.body.classList.toggle('lang-ko', ko);
+        document.documentElement.lang = ko ? 'ko' : 'en';
+        const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT);
+        let n;
+        while ((n = walker.nextNode())) {
+          const t = n.nodeValue.trim();
+          if (!t) continue;
+          if (ko) {
+            if (KO[t] !== undefined) {
+              if (n.__en === undefined) n.__en = n.nodeValue;
+              n.nodeValue = n.nodeValue.replace(t, KO[t]);
+            }
+          } else if (n.__en !== undefined) {
+            n.nodeValue = n.__en;
+          }
+        }
+        // nav tabs & anchor labels live outside <main>
+        document.querySelectorAll('.topnav .view-tab, .topnav .anchors a').forEach(el => {
+          const t = el.textContent.trim();
+          if (ko) {
+            if (KO[t] !== undefined) {
+              if (el.__en === undefined) el.__en = el.textContent;
+              el.textContent = KO[t];
+            }
+          } else if (el.__en !== undefined) {
+            el.textContent = el.__en;
+          }
+        });
+        langBtns.forEach(b => b.classList.toggle('active', (b.dataset.lang === 'ko') === ko));
+        try { localStorage.setItem('lang', ko ? 'ko' : 'en'); } catch (e) {}
+        const activeView = document.querySelector('.view:not([hidden])');
+        if (activeView) startTypewriter(activeView.dataset.view);
+      }
+
+      langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang === 'ko')));
+
+      let savedLang = null;
+      try { savedLang = localStorage.getItem('lang'); } catch (e) {}
+      if (params.get('lang') === 'ko' || savedLang === 'ko') setLang(true);
+
+      /* ===== MAP LINKS for Places ===== */
+      document.querySelectorAll('.places-group .entry').forEach(entry => {
+        const titleEl = entry.querySelector('.title');
+        if (!titleEl) return;
+        const metaEl = entry.querySelector('.meta');
+        const cleanMeta = metaEl ? metaEl.textContent.replace(/·.*$/, '').trim() : '';
+        const q = [titleEl.textContent.trim(), cleanMeta].filter(Boolean).join(', ');
+        const a = document.createElement('a');
+        a.href = 'https://maps.google.com/maps?q=' + encodeURIComponent(q);
+        a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.className = 'map-link'; a.title = 'Google Maps';
+        a.textContent = '🗺';
+        titleEl.appendChild(a);
+      });
+
+      /* ===== INITIAL VIEW ===== */
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'personal' && !proMode) {
+        switchView('personal');
+      } else {
+        startTypewriter('research');
+      }
+    })();
+  </script>
+</body>
+</html>
