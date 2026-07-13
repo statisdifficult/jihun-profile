@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#070a14">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <style>
     /* ============================================================
        AURORA — dark glassmorphism profile with particles,
@@ -22,10 +22,11 @@
       --card-hover: rgba(255, 255, 255, 0.075);
       --text: #e9edf9;
       --muted: #8d95b0;
-      --accent: #38bdf8;
-      --accent-2: #818cf8;
-      --accent-3: #e879f9;
-      --glow: rgba(56, 189, 248, 0.35);
+      --accent: #4ba3f5;
+      --accent-2: #34d399;
+      --accent-3: #fbbf24;
+      --glow: rgba(75, 163, 245, 0.32);
+      --grid-line: rgba(122, 168, 255, 0.055);
       --nav-bg: rgba(7, 10, 20, 0.72);
       --radius: 20px;
       --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
@@ -35,8 +36,9 @@
     body.theme-personal {
       --accent: #fbbf24;
       --accent-2: #fb7185;
-      --accent-3: #e879f9;
+      --accent-3: #34d399;
       --glow: rgba(251, 113, 133, 0.32);
+      --grid-line: rgba(251, 191, 36, 0.05);
     }
 
     /* Light mode */
@@ -48,17 +50,19 @@
       --card-hover: rgba(255, 255, 255, 0.95);
       --text: #131a33;
       --muted: #5d6684;
-      --accent: #0284c7;
-      --accent-2: #6366f1;
-      --accent-3: #c026d3;
-      --glow: rgba(2, 132, 199, 0.18);
+      --accent: #1f77b4;
+      --accent-2: #2ca02c;
+      --accent-3: #d97706;
+      --glow: rgba(31, 119, 180, 0.16);
+      --grid-line: rgba(31, 119, 180, 0.09);
       --nav-bg: rgba(246, 248, 254, 0.78);
     }
     body.light.theme-personal {
       --accent: #d97706;
-      --accent-2: #e11d48;
-      --accent-3: #c026d3;
-      --glow: rgba(225, 29, 72, 0.15);
+      --accent-2: #d62728;
+      --accent-3: #7c3aed;
+      --glow: rgba(214, 39, 40, 0.14);
+      --grid-line: rgba(217, 119, 6, 0.10);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -122,6 +126,41 @@
       25%  { transform: translate(6vw, 4vh) scale(1.08); }
       50%  { transform: translate(-4vw, 7vh) scale(0.94); }
       75%  { transform: translate(-7vw, -4vh) scale(1.05); }
+    }
+
+    /* graph-paper grid */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse at 50% 38%, black 25%, transparent 88%);
+      mask-image: radial-gradient(ellipse at 50% 38%, black 25%, transparent 88%);
+    }
+
+    /* drifting math symbols */
+    .symbols { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .symbols span {
+      position: absolute; top: 105vh;
+      font-family: 'STIX Two Text', 'Times New Roman', serif;
+      font-style: italic;
+      color: var(--accent);
+      --so: 0.11;
+      animation: sym-rise linear infinite;
+      user-select: none; white-space: nowrap;
+    }
+    body.light .symbols span { --so: 0.15; }
+    @keyframes sym-rise {
+      0%   { transform: translateY(0) rotate(-6deg); opacity: 0; }
+      8%   { opacity: var(--so); }
+      92%  { opacity: var(--so); }
+      100% { transform: translateY(-120vh) rotate(8deg); opacity: 0; }
+    }
+
+    .math {
+      font-family: 'STIX Two Text', 'Times New Roman', serif;
+      font-style: italic;
     }
 
     #cursor-glow {
@@ -348,8 +387,10 @@
       margin-bottom: 30px;
     }
     .section-head .idx {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem; color: var(--accent); font-weight: 700;
+      font-family: 'STIX Two Text', 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 1.15rem; color: var(--accent); font-weight: 600;
+      min-width: 1.2em; text-align: center;
     }
     .section-head h2 {
       font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em;
@@ -529,9 +570,15 @@
     .stat-card:hover { transform: translateY(-6px) scale(1.02); border-color: var(--accent); }
     .stat-card:hover::before { opacity: 1; }
     .stat-card .s-emoji { font-size: 1.7rem; display: block; margin-bottom: 6px; }
+    .stat-card .s-line { display: block; line-height: 1.1; }
+    .stat-card .s-pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem; font-weight: 400; color: var(--muted);
+      margin-right: 5px; font-style: italic;
+    }
     .stat-card .s-num {
       font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em;
-      line-height: 1.1; display: block;
+      line-height: 1.1; display: inline-block;
       background: linear-gradient(110deg, var(--accent), var(--accent-2));
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -712,7 +759,25 @@
 <body>
   <div id="progress"></div>
   <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="grid-bg" aria-hidden="true"></div>
   <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+  <div class="symbols" aria-hidden="true">
+    <span style="left:4%;  font-size:2.2rem; animation-duration:58s; animation-delay:-6s">∑</span>
+    <span style="left:12%; font-size:1.5rem; animation-duration:71s; animation-delay:-32s">σ²</span>
+    <span style="left:19%; font-size:1.9rem; animation-duration:64s; animation-delay:-51s">∫</span>
+    <span style="left:27%; font-size:1.3rem; animation-duration:77s; animation-delay:-18s">μ</span>
+    <span style="left:34%; font-size:1.7rem; animation-duration:62s; animation-delay:-44s">χ²</span>
+    <span style="left:43%; font-size:1.4rem; animation-duration:69s; animation-delay:-9s">β̂</span>
+    <span style="left:51%; font-size:2.0rem; animation-duration:74s; animation-delay:-60s">π</span>
+    <span style="left:58%; font-size:1.3rem; animation-duration:56s; animation-delay:-27s">λ</span>
+    <span style="left:65%; font-size:1.6rem; animation-duration:80s; animation-delay:-39s">∇</span>
+    <span style="left:72%; font-size:1.4rem; animation-duration:60s; animation-delay:-14s">θ</span>
+    <span style="left:79%; font-size:1.8rem; animation-duration:72s; animation-delay:-55s">Φ</span>
+    <span style="left:86%; font-size:1.3rem; animation-duration:66s; animation-delay:-22s">ε</span>
+    <span style="left:92%; font-size:1.5rem; animation-duration:78s; animation-delay:-47s">∂</span>
+    <span style="left:38%; font-size:1.2rem; animation-duration:84s; animation-delay:-70s">N(μ, σ²)</span>
+    <span style="left:83%; font-size:1.2rem; animation-duration:88s; animation-delay:-35s">p&nbsp;&lt;&nbsp;.05</span>
+  </div>
   <div id="cursor-glow" aria-hidden="true"></div>
 
   <nav class="topnav">
@@ -770,7 +835,7 @@
       <div class="container">
         <section class="about" id="about" data-reveal>
           <div class="section-head">
-            <span class="idx">01</span><h2>About</h2><span class="rule"></span>
+            <span class="idx">α</span><h2>About</h2><span class="rule"></span>
           </div>
           <div class="glass tilt">
             <p class="about-text lang-en">Senior Data Scientist and Researcher at <a href="https://www.chilab.kr/" target="_blank" rel="noopener">CHI Lab</a>, Asan Medical Center. I work at the intersection of <strong>statistics</strong>, <strong>machine learning</strong>, and <strong>clinical epidemiology</strong>, drawing on Korean national health claims data (NHIS, HIRA).</p>
@@ -780,7 +845,7 @@
 
         <section id="timeline" data-reveal>
           <div class="section-head">
-            <span class="idx">02</span><h2 class="lang-en">Timeline</h2><h2 class="lang-ko">연혁</h2><span class="rule"></span>
+            <span class="idx">β</span><h2 class="lang-en">Timeline</h2><h2 class="lang-ko">연혁</h2><span class="rule"></span>
           </div>
           <div class="glass">
             <h3 class="subhead">Research Experience</h3>
@@ -815,7 +880,7 @@
 
         <section id="current-research" data-reveal>
           <div class="section-head">
-            <span class="idx">03</span><h2>Research in Progress</h2><span class="rule"></span>
+            <span class="idx">γ</span><h2>Research in Progress</h2><span class="rule"></span>
           </div>
           <div class="glass tilt">
             <ul class="brief-list">
@@ -827,7 +892,7 @@
 
         <section id="publications" data-reveal>
           <div class="section-head">
-            <span class="idx">04</span><h2>Publications</h2><span class="rule"></span>
+            <span class="idx">δ</span><h2>Publications</h2><span class="rule"></span>
           </div>
           <div class="glass">
             <h3 class="subhead">Journal Articles <span class="count">2</span></h3>
@@ -860,7 +925,7 @@
 
         <section id="contact" data-reveal>
           <div class="section-head">
-            <span class="idx">05</span><h2>Contact</h2><span class="rule"></span>
+            <span class="idx">ε</span><h2>Contact</h2><span class="rule"></span>
           </div>
           <div class="contact-grid">
             <a class="contact-card" href="mailto:yoon2839@chilab.kr">
@@ -901,25 +966,25 @@
           <div class="stats-grid">
             <div class="stat-card">
               <span class="s-emoji">⚾</span>
-              <span class="s-num" data-target="17">0</span>
+              <span class="s-line"><span class="s-pre">n =</span><span class="s-num" data-target="17">0</span></span>
               <span class="s-label lang-en">stadiums</span>
               <span class="s-label lang-ko">야구장</span>
             </div>
             <div class="stat-card">
               <span class="s-emoji">🌍</span>
-              <span class="s-num" data-target="6">0</span>
+              <span class="s-line"><span class="s-pre">n =</span><span class="s-num" data-target="6">0</span></span>
               <span class="s-label lang-en">countries</span>
               <span class="s-label lang-ko">나라</span>
             </div>
             <div class="stat-card">
               <span class="s-emoji">⚫</span>
-              <span class="s-num" data-target="4">0</span>
+              <span class="s-line"><span class="s-pre">n =</span><span class="s-num" data-target="4">0</span></span>
               <span class="s-label lang-en">tournaments</span>
               <span class="s-label lang-ko">바둑대회</span>
             </div>
             <div class="stat-card">
               <span class="s-emoji">✈️</span>
-              <span class="s-num" data-target="27">0</span>
+              <span class="s-line"><span class="s-pre">n =</span><span class="s-num" data-target="27">0</span></span>
               <span class="s-label lang-en">cities</span>
               <span class="s-label lang-ko">도시</span>
             </div>
@@ -928,7 +993,7 @@
 
         <section id="p-places" data-reveal>
           <div class="section-head">
-            <span class="idx">01</span><h2>Places I've Been</h2><span class="rule"></span>
+            <span class="idx">α</span><h2>Places I've Been</h2><span class="rule"></span>
           </div>
 
           <details class="places-group homes" id="p-places-homes">
@@ -997,6 +1062,7 @@
           <details class="places-group baseball" id="p-places-baseball">
             <summary><span class="pg-emoji">⚾</span> Baseball Stadiums <span class="count">17</span></summary>
             <div class="places-group-content">
+              <p class="group-note"><span class="math">W% ≈ RS² / (RS² + RA²)</span> — <span class="lang-en">Pythagorean expectation, the topic of my M.S. thesis.</span><span class="lang-ko">피타고라스 승률, 제 석사논문 주제였습니다.</span></p>
               <h4 class="subhead-mini">USA · MLB <span class="count">3</span></h4>
               <ul>
                 <li class="entry"><div class="entry-main">
@@ -1219,7 +1285,7 @@
 
         <section id="p-currently" data-reveal>
           <div class="section-head">
-            <span class="idx">02</span><h2>Currently</h2><span class="rule"></span>
+            <span class="idx">β</span><h2>Currently</h2><span class="rule"></span>
           </div>
           <div class="currently-grid">
             <div class="currently-item">
@@ -1263,7 +1329,7 @@
 
         <section id="p-blog" data-reveal>
           <div class="section-head">
-            <span class="idx">03</span><h2>Blog</h2><span class="rule"></span>
+            <span class="idx">γ</span><h2>Blog</h2><span class="rule"></span>
           </div>
           <div class="placeholder">
             <p>네이버 블로그 또는 다른 플랫폼 블로그 링크를 여기에 추가하세요.<br>
@@ -1273,7 +1339,7 @@
 
         <section id="p-interests" data-reveal>
           <div class="section-head">
-            <span class="idx">04</span><h2>Interests</h2><span class="rule"></span>
+            <span class="idx">δ</span><h2>Interests</h2><span class="rule"></span>
           </div>
           <div class="placeholder">
             <p>취미, 좋아하는 책, 운동 등 자유롭게.</p>
@@ -1282,7 +1348,7 @@
 
         <section id="p-contact" data-reveal>
           <div class="section-head">
-            <span class="idx">05</span><h2>Contact</h2><span class="rule"></span>
+            <span class="idx">ε</span><h2>Contact</h2><span class="rule"></span>
           </div>
           <div class="contact-grid">
             <a class="contact-card" href="mailto:qdbswlgns@gmail.com">
@@ -1295,7 +1361,7 @@
     </div>
   </main>
 
-  <footer>&copy; 2026 Jihun Yoon · <span class="lang-en">made with</span><span class="lang-ko">with</span> <span class="heart">❤️</span></footer>
+  <footer>&copy; 2026 Jihun Yoon · <span class="lang-en">made with</span><span class="lang-ko">with</span> <span class="heart">❤️</span> <span class="math">(p &lt; .001)</span></footer>
 
   <script>
     (function () {
@@ -1356,8 +1422,8 @@
         const mouse = { x: -9999, y: -9999 };
         const LINK = 130;
 
-        function accentColor() {
-          return getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#38bdf8';
+        function cssColor(name, fallback) {
+          return getComputedStyle(document.body).getPropertyValue(name).trim() || fallback;
         }
         function resize() {
           W = canvas.width = innerWidth;
@@ -1367,7 +1433,8 @@
             x: Math.random() * W, y: Math.random() * H,
             vx: (Math.random() - 0.5) * 0.35,
             vy: (Math.random() - 0.5) * 0.35,
-            r: Math.random() * 1.6 + 0.6
+            r: Math.random() * 1.7 + 0.9,
+            shape: Math.random() < 0.62 ? 0 : (Math.random() < 0.5 ? 1 : 2) // ○ × △
           }));
         }
         addEventListener('resize', resize); resize();
@@ -1387,10 +1454,14 @@
         let frame = 0;
         (function draw() {
           ctx.clearRect(0, 0, W, H);
-          if (frame++ % 30 === 0) draw.rgb = hexToRgb(accentColor());
-          const [r, g, b] = draw.rgb || [56, 189, 248];
+          if (frame++ % 30 === 0) {
+            draw.rgb = hexToRgb(cssColor('--accent', '#4ba3f5'));
+            draw.rgb2 = hexToRgb(cssColor('--accent-2', '#34d399'));
+          }
+          const [r, g, b] = draw.rgb || [75, 163, 245];
+          const [r2, g2, b2] = draw.rgb2 || [52, 211, 153];
           const light = document.body.classList.contains('light');
-          const baseA = light ? 0.35 : 0.55;
+          const baseA = light ? 0.4 : 0.55;
 
           for (const p of pts) {
             // gentle mouse attraction
@@ -1405,10 +1476,28 @@
             if (p.x < 0 || p.x > W) p.vx *= -1;
             if (p.y < 0 || p.y > H) p.vy *= -1;
 
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${r},${g},${b},${baseA})`;
-            ctx.fill();
+            // scatter-plot markers: ○ × △
+            ctx.strokeStyle = ctx.fillStyle = `rgba(${r},${g},${b},${baseA})`;
+            ctx.lineWidth = 1.1;
+            if (p.shape === 0) {
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fill();
+            } else if (p.shape === 1) {
+              const s = p.r + 1.4;
+              ctx.beginPath();
+              ctx.moveTo(p.x - s, p.y - s); ctx.lineTo(p.x + s, p.y + s);
+              ctx.moveTo(p.x + s, p.y - s); ctx.lineTo(p.x - s, p.y + s);
+              ctx.stroke();
+            } else {
+              const s = p.r + 1.8;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y - s);
+              ctx.lineTo(p.x + s * 0.87, p.y + s * 0.5);
+              ctx.lineTo(p.x - s * 0.87, p.y + s * 0.5);
+              ctx.closePath();
+              ctx.stroke();
+            }
           }
           for (let i = 0; i < pts.length; i++) {
             for (let j = i + 1; j < pts.length; j++) {
@@ -1418,11 +1507,34 @@
                 ctx.beginPath();
                 ctx.moveTo(pts[i].x, pts[i].y);
                 ctx.lineTo(pts[j].x, pts[j].y);
-                ctx.strokeStyle = `rgba(${r},${g},${b},${(1 - d / LINK) * (light ? 0.12 : 0.16)})`;
+                ctx.strokeStyle = `rgba(${r},${g},${b},${(1 - d / LINK) * (light ? 0.1 : 0.13)})`;
                 ctx.lineWidth = 1;
                 ctx.stroke();
               }
             }
+          }
+
+          // live least-squares fit through the drifting points
+          let sx = 0, sy = 0, sxx = 0, sxy = 0;
+          const n = pts.length;
+          for (const p of pts) { sx += p.x; sy += p.y; sxx += p.x * p.x; sxy += p.x * p.y; }
+          const denom = n * sxx - sx * sx;
+          if (n > 2 && Math.abs(denom) > 1e-6) {
+            const b1 = (n * sxy - sx * sy) / denom;
+            const b0 = (sy - b1 * sx) / n;
+            ctx.setLineDash([8, 8]);
+            ctx.beginPath();
+            ctx.moveTo(0, b0);
+            ctx.lineTo(W, b0 + b1 * W);
+            ctx.strokeStyle = `rgba(${r2},${g2},${b2},${light ? 0.55 : 0.42})`;
+            ctx.lineWidth = 1.4;
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.font = 'italic 12px "JetBrains Mono", monospace';
+            ctx.fillStyle = `rgba(${r2},${g2},${b2},${light ? 0.8 : 0.65})`;
+            const lx = W - 235;
+            const ly = Math.min(Math.max(b0 + b1 * lx - 12, 22), H - 16);
+            ctx.fillText(`ŷ = ${b0.toFixed(1)} ${b1 < 0 ? '−' : '+'} ${Math.abs(b1).toFixed(3)}·x`, lx, ly);
           }
           requestAnimationFrame(draw);
         })();
@@ -1431,12 +1543,12 @@
       /* ===== TYPEWRITER ===== */
       const TW = {
         research: {
-          en: ['statistics.', 'machine learning.', 'clinical epidemiology.', 'NHIS · HIRA claims data.'],
-          ko: ['통계를 연구합니다.', '머신러닝을 연구합니다.', '임상역학을 연구합니다.', 'NHIS · HIRA 청구자료를 다룹니다.']
+          en: ['statistics.', 'machine learning.', 'clinical epidemiology.', 'regression — y = Xβ + ε.', 'NHIS · HIRA claims data.'],
+          ko: ['통계를 연구합니다.', '머신러닝을 연구합니다.', '임상역학을 연구합니다.', '회귀모형 — y = Xβ + ε.', 'NHIS · HIRA 청구자료를 다룹니다.']
         },
         personal: {
-          en: ['Things outside the lab.', 'Baseball stadiums. ⚾', 'Baduk tournaments. ⚫', 'Travel stories. ✈️'],
-          ko: ['연구실 밖의 이야기들.', '전국 야구장 투어. ⚾', '바둑대회 원정기. ⚫', '여행의 기록들. ✈️']
+          en: ['Things outside the lab.', 'Baseball stadiums. ⚾', 'W% ≈ RS²/(RS²+RA²).', 'Baduk tournaments. ⚫', 'Travel stories. ✈️'],
+          ko: ['연구실 밖의 이야기들.', '전국 야구장 투어. ⚾', 'W% ≈ RS²/(RS²+RA²).', '바둑대회 원정기. ⚫', '여행의 기록들. ✈️']
         }
       };
       let twTimer = null;
