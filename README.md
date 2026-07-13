@@ -4,7 +4,9 @@ Personal profile site for **Jihun Yoon** (윤지훈) — Senior Data Scientist &
 
 An upgraded, effects-heavy single-page profile:
 
-- 🌌 Particle constellation canvas + animated aurora background
+- 🌌 Scatter-plot canvas (○ × △ markers) with a live least-squares regression line + animated aurora
+- 📐 Graph-paper grid, drifting math symbols (∑ σ² χ² …), Greek section indices
+- 🫀 ECG trace scrolling along the bottom, synaptic pulses on the constellation links
 - ⌨️ Typewriter hero subtitle (per view & language)
 - ✨ Scroll-reveal sections, 3D tilt cards, cursor glow, scroll progress bar
 - 🔢 Animated stat counters, glowing timeline, glass accordions

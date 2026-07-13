@@ -27,6 +27,7 @@
       --accent-3: #fbbf24;
       --glow: rgba(75, 163, 245, 0.32);
       --grid-line: rgba(122, 168, 255, 0.055);
+      --ecg: #fb7185;
       --nav-bg: rgba(7, 10, 20, 0.72);
       --radius: 20px;
       --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
@@ -39,6 +40,7 @@
       --accent-3: #34d399;
       --glow: rgba(251, 113, 133, 0.32);
       --grid-line: rgba(251, 191, 36, 0.05);
+      --ecg: #4ade80;
     }
 
     /* Light mode */
@@ -55,6 +57,7 @@
       --accent-3: #d97706;
       --glow: rgba(31, 119, 180, 0.16);
       --grid-line: rgba(31, 119, 180, 0.09);
+      --ecg: #d62728;
       --nav-bg: rgba(246, 248, 254, 0.78);
     }
     body.light.theme-personal {
@@ -63,6 +66,7 @@
       --accent-3: #7c3aed;
       --glow: rgba(214, 39, 40, 0.14);
       --grid-line: rgba(217, 119, 6, 0.10);
+      --ecg: #2ca02c;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -777,6 +781,11 @@
     <span style="left:92%; font-size:1.5rem; animation-duration:78s; animation-delay:-47s">∂</span>
     <span style="left:38%; font-size:1.2rem; animation-duration:84s; animation-delay:-70s">N(μ, σ²)</span>
     <span style="left:83%; font-size:1.2rem; animation-duration:88s; animation-delay:-35s">p&nbsp;&lt;&nbsp;.05</span>
+    <span style="left:8%;  font-size:1.7rem; animation-duration:75s; animation-delay:-58s">⚕</span>
+    <span style="left:47%; font-size:1.1rem; animation-duration:82s; animation-delay:-25s">HR&nbsp;0.87&nbsp;(95%&nbsp;CI)</span>
+    <span style="left:69%; font-size:1.1rem; animation-duration:86s; animation-delay:-64s">ICD-10&nbsp;·&nbsp;I21</span>
+    <span style="left:23%; font-size:1.25rem; animation-duration:79s; animation-delay:-41s">∇L(θ)</span>
+    <span style="left:95%; font-size:1.2rem; animation-duration:73s; animation-delay:-12s">p(y&nbsp;|&nbsp;x)</span>
   </div>
   <div id="cursor-glow" aria-hidden="true"></div>
 
@@ -1425,6 +1434,18 @@
         function cssColor(name, fallback) {
           return getComputedStyle(document.body).getPropertyValue(name).trim() || fallback;
         }
+
+        /* ECG waveform (P–QRS–T complex via gaussians) */
+        const ECG_STEP = 3;
+        let ecgBuf = [], ecgPhase = 0;
+        function ecgWave(p) {
+          const g = (c, w) => Math.exp(-((p - c) * (p - c)) / (2 * w * w));
+          return 0.09 * g(0.16, 0.022) - 0.05 * g(0.245, 0.008) + 0.6 * g(0.27, 0.011)
+               - 0.13 * g(0.30, 0.011) + 0.16 * g(0.45, 0.04);
+        }
+
+        const pulses = []; // synaptic pulses travelling along links
+
         function resize() {
           W = canvas.width = innerWidth;
           H = canvas.height = innerHeight;
@@ -1436,6 +1457,8 @@
             r: Math.random() * 1.7 + 0.9,
             shape: Math.random() < 0.62 ? 0 : (Math.random() < 0.5 ? 1 : 2) // ○ × △
           }));
+          ecgBuf = new Array(Math.ceil(W / ECG_STEP) + 2).fill(0);
+          pulses.length = 0;
         }
         addEventListener('resize', resize); resize();
         addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
@@ -1457,9 +1480,13 @@
           if (frame++ % 30 === 0) {
             draw.rgb = hexToRgb(cssColor('--accent', '#4ba3f5'));
             draw.rgb2 = hexToRgb(cssColor('--accent-2', '#34d399'));
+            draw.rgb3 = hexToRgb(cssColor('--accent-3', '#fbbf24'));
+            draw.rgbE = hexToRgb(cssColor('--ecg', '#fb7185'));
           }
           const [r, g, b] = draw.rgb || [75, 163, 245];
           const [r2, g2, b2] = draw.rgb2 || [52, 211, 153];
+          const [r3, g3, b3] = draw.rgb3 || [251, 191, 36];
+          const [er, eg, eb] = draw.rgbE || [251, 113, 133];
           const light = document.body.classList.contains('light');
           const baseA = light ? 0.4 : 0.55;
 
@@ -1536,6 +1563,55 @@
             const ly = Math.min(Math.max(b0 + b1 * lx - 12, 22), H - 16);
             ctx.fillText(`ŷ = ${b0.toFixed(1)} ${b1 < 0 ? '−' : '+'} ${Math.abs(b1).toFixed(3)}·x`, lx, ly);
           }
+
+          // synaptic pulses along links (a hint of neural nets)
+          if (frame % 40 === 0 && pulses.length < 5) {
+            const i = (Math.random() * pts.length) | 0;
+            for (let j = 0; j < pts.length; j++) {
+              if (j === i) continue;
+              if (Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y) < LINK) {
+                pulses.push({ i, j, t: 0 });
+                break;
+              }
+            }
+          }
+          for (let k = pulses.length - 1; k >= 0; k--) {
+            const pu = pulses[k];
+            pu.t += 0.022;
+            if (pu.t >= 1 || pu.i >= pts.length || pu.j >= pts.length) { pulses.splice(k, 1); continue; }
+            const a = pts[pu.i], c = pts[pu.j];
+            const px = a.x + (c.x - a.x) * pu.t, py = a.y + (c.y - a.y) * pu.t;
+            ctx.beginPath();
+            ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r3},${g3},${b3},${0.85 * Math.sin(Math.PI * pu.t)})`;
+            ctx.fill();
+          }
+
+          // ECG trace scrolling along the bottom (a hint of the clinic)
+          ecgPhase = (ecgPhase + 1 / 280) % 1;
+          ecgBuf.push(ecgWave(ecgPhase));
+          ecgBuf.shift();
+          const ecgY = H * 0.86, ecgAmp = 62;
+          ctx.beginPath();
+          for (let i = 0; i < ecgBuf.length; i++) {
+            const x = i * ECG_STEP;
+            const y = ecgY - ecgBuf[i] * ecgAmp;
+            i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+          }
+          ctx.strokeStyle = `rgba(${er},${eg},${eb},${light ? 0.35 : 0.26})`;
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
+          // bright leading dot, monitor-style
+          const ex = (ecgBuf.length - 1) * ECG_STEP;
+          const ey = ecgY - ecgBuf[ecgBuf.length - 1] * ecgAmp;
+          ctx.beginPath();
+          ctx.arc(Math.min(ex, W - 4), ey, 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${er},${eg},${eb},0.9)`;
+          ctx.shadowColor = `rgba(${er},${eg},${eb},0.9)`;
+          ctx.shadowBlur = 14;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
           requestAnimationFrame(draw);
         })();
       }
