@@ -145,7 +145,7 @@
 
     /* drifting math symbols */
     .symbols { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-    .symbols span {
+    .symbols > span {
       position: absolute; top: 105vh;
       font-family: 'STIX Two Text', 'Times New Roman', serif;
       font-style: italic;
@@ -154,7 +154,7 @@
       animation: sym-rise linear infinite;
       user-select: none; white-space: nowrap;
     }
-    body.light .symbols span { --so: 0.15; }
+    body.light .symbols > span { --so: 0.15; }
     @keyframes sym-rise {
       0%   { transform: translateY(0) rotate(-6deg); opacity: 0; }
       8%   { opacity: var(--so); }
@@ -167,16 +167,30 @@
       font-style: italic;
     }
 
+    /* drifting motto lines (luck & skill) */
+    .symbols .sym-quote, .symbols-fun .sym-quote {
+      font-family: 'Sora', 'Noto Sans KR', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      --so: 0.24;
+      white-space: nowrap;
+      text-shadow: 0 0 14px var(--glow);
+    }
+    body.light .symbols .sym-quote, body.light .symbols-fun .sym-quote { --so: 0.32; text-shadow: none; }
+    .symbols .sym-quote .math, .symbols-fun .sym-quote .math { font-weight: 400; }
+
     /* Personal view goes light & playful: science layers off, emoji on */
     body.theme-personal .grid-bg,
     body.theme-personal .symbols { display: none; }
     .symbols-fun { display: none; position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
     body.theme-personal .symbols-fun { display: block; }
-    .symbols-fun span {
+    .symbols-fun > span {
       position: absolute; top: 105vh;
       --so: 0.2;
       animation: sym-rise linear infinite;
-      user-select: none;
+      user-select: none; white-space: nowrap;
     }
 
     #cursor-glow {
@@ -893,6 +907,10 @@
     <span style="left:92%; font-size:1.5rem; animation-duration:78s; animation-delay:-47s">∂</span>
     <span style="left:38%; font-size:1.2rem; animation-duration:84s; animation-delay:-70s">N(μ, σ²)</span>
     <span style="left:83%; font-size:1.2rem; animation-duration:88s; animation-delay:-35s">p&nbsp;&lt;&nbsp;.05</span>
+    <span class="sym-quote" style="left:15%; font-size:1.02rem; animation-duration:96s; animation-delay:-22s"><span class="lang-en">Results regress to skill.</span><span class="lang-ko">결과는 실력에 회귀한다</span></span>
+    <span class="sym-quote" style="left:62%; font-size:0.98rem; animation-duration:104s; animation-delay:-68s"><span class="lang-en">So raise the skill.</span><span class="lang-ko">그러니, 실력을 높여라</span></span>
+    <span class="sym-quote" style="left:36%; font-size:0.95rem; animation-duration:110s; animation-delay:-45s"><span class="lang-en">outcome = skill + ε,&nbsp; E[ε] = 0</span><span class="lang-ko">결과 = 실력 + ε,&nbsp; E[ε] = 0</span></span>
+    <span class="sym-quote" style="left:80%; font-size:0.95rem; animation-duration:100s; animation-delay:-88s"><span class="lang-en">Luck averages out.</span><span class="lang-ko">운은 평균으로 회귀한다</span></span>
     <span style="left:8%;  font-size:1.7rem; animation-duration:75s; animation-delay:-58s">⚕</span>
     <span style="left:47%; font-size:1.1rem; animation-duration:82s; animation-delay:-25s">HR&nbsp;0.87&nbsp;(95%&nbsp;CI)</span>
     <span style="left:69%; font-size:1.1rem; animation-duration:86s; animation-delay:-64s">ICD-10&nbsp;·&nbsp;I21</span>
@@ -912,6 +930,8 @@
     <span style="left:83%; font-size:1.5rem; animation-duration:60s; animation-delay:-30s">⛩️</span>
     <span style="left:91%; font-size:1.6rem; animation-duration:68s; animation-delay:-55s">🌊</span>
     <span style="left:37%; font-size:1.3rem; animation-duration:80s; animation-delay:-70s">🎒</span>
+    <span class="sym-quote" style="left:18%; font-size:0.98rem; animation-duration:98s; animation-delay:-18s"><span class="lang-en">Results regress to skill.</span><span class="lang-ko">결과는 실력에 회귀한다</span></span>
+    <span class="sym-quote" style="left:64%; font-size:0.95rem; animation-duration:106s; animation-delay:-62s"><span class="lang-en">Luck regresses to the mean ⚾</span><span class="lang-ko">운은 평균으로 회귀한다 ⚾</span></span>
   </div>
   <div id="cursor-glow" aria-hidden="true"></div>
 
